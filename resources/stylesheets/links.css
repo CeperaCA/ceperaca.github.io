@@ -1,0 +1,58 @@
+/* ссылки */
+
+div.links {
+    width: 100%;
+
+    /* изменяется в скрипте onload-page.js */
+    height: 48px;
+}
+
+div.links div.icon {
+    /* изменяется в скрипте onload-page.js */
+    height: 48px;
+    width: 48px;
+
+    float: left;
+
+    margin-right: 10px;
+}
+
+div.icon-DS {
+    /* изменяется в скрипте onload-page.js */
+    height: 48px;
+
+    position: relative;
+}
+
+div.icon-DS div.text {
+    position: absolute;
+    
+    top: 50%;
+
+    /* сдвиг по оси Y */
+    transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+
+    /* изменяется в скрипте onload-page.js */
+    margin-left: 48px;
+}
+
+/* все иконки */
+
+div.icon img {
+    /* изменяется в скрипте onload-page.js */
+    height: 48px;
+
+    /* визуальный эффект */
+    filter: invert(15%) sepia(32%) saturate(455%) hue-rotate(303deg) brightness(104%) contrast(105%);
+    -webkit-filter: invert(15%) sepia(32%) saturate(455%) hue-rotate(303deg) brightness(104%) contrast(105%);
+}
+
+div.icon img:hover {
+    /* визуальный эффект */
+    filter: invert(79%) sepia(99%) saturate(7498%) hue-rotate(359deg) brightness(94%) contrast(114%);
+    -webkit-filter: invert(79%) sepia(99%) saturate(7498%) hue-rotate(359deg) brightness(94%) contrast(114%);
+}

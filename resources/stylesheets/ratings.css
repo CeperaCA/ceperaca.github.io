@@ -1,0 +1,98 @@
+ul div.rating li {
+    list-style-type: none;
+}
+
+ul div.rating li:before {
+    content: "★ ";
+    color: orangered;
+}
+
+ul div.rating {
+    display: none;
+
+    font-size: 75%;
+}
+
+ul div.rating img {
+    height: 38px;
+}
+
+ul div.rating img.play {
+    /* изменяется в скрипте onload-page.js */
+    height: 24px;
+}
+
+/* блеск */
+
+ul div.rating a.play {
+    position: relative;
+
+    /* для изначальной прозрачности */
+    overflow: hidden;
+    display: inline-block;
+}
+
+ul div.rating a.play:after {
+    content: "";
+
+    height: 200%;
+    width: 150%;
+
+    position: absolute;
+    left: -200%;
+    top: -50%;
+    
+    transform: rotate(-45deg);
+    
+    /* блеск */
+    background: linear-gradient(to bottom, transparent 0%, rgba(255, 0, 0, 0.5) 40%, rgba(255, 0, 0, 1) 50%, rgba(255, 0, 0, 0.5) 60% , transparent 100%);
+}
+
+ul div.rating a.play:hover:after {
+    /* конечная позиция перемещения */
+    left: 150%;
+    
+    /* время перемещения */
+    transition: 1s; 
+}
+
+/* текст */
+
+b.kinopoisk {
+    font-family: sans-serif;
+    color: orangered;
+}
+
+/* блеск */
+
+ul div.rating a.rating-img {
+    position: relative;
+
+    /* для изначальной прозрачности */
+    overflow: hidden;
+    display: inline-block;
+}
+
+ul div.rating a.rating-img:after {
+    content: "";
+
+    height: 200%;
+    width: 150%;
+
+    position: absolute;
+    left: -150%;
+    top: -50%;
+    
+    transform: rotate(-45deg);
+    
+    /* блеск */
+    background: linear-gradient(to bottom, transparent 0%, rgba(255, 0, 0, 0.5) 40%, rgba(255, 0, 0, 1) 50%, rgba(255, 0, 0, 0.5) 60% , transparent 100%);
+}
+
+ul div.rating a.rating-img:hover:after {
+    /* конечная позиция перемещения */
+    left: 100%;
+    
+    /* время перемещения */
+    transition: 1s; 
+}

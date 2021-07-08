@@ -1,0 +1,120 @@
+/* тело */
+body {
+    background-image: url(../images/fon.jpg);
+    
+    margin: 0;
+    margin-right: 5px;
+    
+    color: pink;
+}
+
+body div.body {
+    padding: 1px 10px;
+
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+body div.fon-transparent {
+    width: 5px;
+    height: 100%;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* заголовки */
+h2 {
+    margin-bottom: 0;
+}
+
+h2#first {
+    margin-top: 0;
+}
+
+hr {
+    margin-top: 0;
+
+    border: none;
+
+    color: pink;
+    background-color: pink;
+
+    /* изменяется в скрипте onload-page.js */
+    height: 2px;
+}
+
+/* абзацы */
+div.p {
+    /* изменяется в скрипте onload-page.js */
+    margin: 24px 0;
+}
+
+/* списки */
+ul {
+    /* изменяется в скрипте onload-page.js */
+    padding-left: 48px;
+}
+
+/* изображения */
+img {
+    /* запрет выделения */
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+/* ссылки */
+a:link {
+    color: fuchsia;
+}
+
+a:visited {
+    color: mediumvioletred;
+}
+
+a:hover {
+    color: red;
+
+    font-weight: bold;
+}
+
+a:active {
+    color: maroon;
+
+    font-weight: bold;
+}
+
+/* кнопка наверх */
+body div.body div.up { 
+    width: 50px;
+    height: 50px;
+
+    display: none;
+
+    cursor: pointer;
+    
+    background-image: url('../images/UP.png');
+    /* размер фона */
+    background-size: 100%;
+    -webkit-background-size: 100%;
+    -o-background-size: 100%;
+    -moz-background-size: 100%;
+    
+    position: fixed;
+	right: 25px;
+    bottom: 15px;
+
+    /* визуальный эффект */
+    filter: invert(15%) sepia(32%) saturate(455%) hue-rotate(303deg) brightness(104%) contrast(105%);
+    -webkit-filter: invert(15%) sepia(32%) saturate(455%) hue-rotate(303deg) brightness(104%) contrast(105%);
+}
+
+body div.body div.up:hover { 
+    /* визуальный эффект */
+    filter: invert(79%) sepia(99%) saturate(7498%) hue-rotate(359deg) brightness(94%) contrast(114%);
+    -webkit-filter: invert(79%) sepia(99%) saturate(7498%) hue-rotate(359deg) brightness(94%) contrast(114%);
+}

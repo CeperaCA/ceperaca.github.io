@@ -1,0 +1,104 @@
+details {
+    border: 1px solid pink;
+    border-radius: 4px;
+    border-left: 5px solid pink;
+
+    margin: 5px 0;
+    padding: 5px;
+}
+
+details summary {
+    list-style-type: "▼ ";
+    cursor: pointer;
+
+    margin: -5px -5px 0;
+    padding: 5px;
+}
+
+details summary:hover {
+    list-style-type: "▶ ";
+}
+
+details[open] summary {
+    list-style-type: "▲ ";
+
+    border-bottom: 1px solid pink;
+
+    margin-bottom: 5px;
+}
+
+details[open] summary:hover {
+    list-style-type: "◀ ";
+}
+
+details summary small {
+    color: thistle;
+
+    float: right;
+}
+
+details:not([open]) {
+    /* изменяется в скрипте onload-page.js */
+    height: 27px;
+}
+
+details:not([open]) summary small#open {
+    display: inline;
+}
+
+details:not([open]) summary small#close {
+    display: none;
+}
+
+details[open] summary small#open {
+    display: none;
+}
+
+details[open] summary small#close {
+    display: inline;
+}
+
+details center {
+    /* появление содержимого вместе с анимацией */
+    overflow: hidden;
+}
+
+details[open] center {
+    /* анимация открытия */
+    animation: spoiler 3s;
+    -webkit-animation: spoiler 3s;
+    -moz-animation: spoiler 3s;
+    -o-animation: spoiler 3s;
+}
+
+details[open] div {
+    /* анимация открытия */
+    animation: spoiler 3s;
+    -webkit-animation: spoiler 3s;
+    -moz-animation: spoiler 3s;
+    -o-animation: spoiler 3s;
+}
+
+/* ключевые кадры */
+/* высота и прозрачность */
+@keyframes spoiler {
+    0%   {max-height: 0; opacity: 0; filter: alpha(opacity=0);}
+    100% {max-height: 500px; opacity: 1; filter: alpha(opacity=100);}
+}
+@-webkit-keyframes spoiler {
+    0%   {max-height: 0; opacity: 0; filter: alpha(opacity=0);}
+    100% {max-height: 500px; opacity: 1; filter: alpha(opacity=100);}
+}
+@-moz-keyframes spoiler {
+    0%   {max-height: 0; opacity: 0; filter: alpha(opacity=0);}
+    100% {max-height: 500px; opacity: 1; filter: alpha(opacity=100);}
+}
+@-o-keyframes spoiler {
+    0%   {max-height: 0; opacity: 0; filter: alpha(opacity=0);}
+    100% {max-height: 500px; opacity: 1; filter: alpha(opacity=100);}
+}
+
+/* фон для заголовка гугл карт */
+details center iframe.map {
+    background-color: white;
+}

@@ -1,0 +1,65 @@
+/* проекты */
+
+ul.projects li ul li {
+    list-style-type: none;
+}
+
+ul.projects li ul li:before {
+    content: "⯈ ";
+}
+
+ul.projects li ul li div.download {
+    /* изменяется в скрипте onload-page.js */
+    padding-left: 24px;
+
+    /* изменяется в скрипте onload-page.js */
+    height: 48px;
+}
+
+ul.projects li ul li div.download a img {
+    height: 90%;
+    margin-top: 0.5%;
+}
+
+/* блеск */
+
+ul.projects li ul li div.download a {
+    /* изменяется в скрипте onload-page.js */
+    height: 48px;
+
+    position: relative;
+
+    /* для изначальной прозрачности */
+    overflow: hidden;
+    display: inline-block;
+}
+
+ul.projects li ul li div.download a:after {
+    content: "";
+
+    height: 200%;
+    width: 150%;
+
+    position: absolute;
+    left: -140%;
+    top: -50%;
+    
+    transform: rotate(-45deg);
+    
+    /* блеск */
+    background: linear-gradient(to bottom, transparent 0%, rgba(255, 0, 0, 0.5) 40%, rgba(255, 0, 0, 1) 50%, rgba(255, 0, 0, 0.5) 60% , transparent 100%);
+}
+
+ul.projects li ul li div.download a:hover:after {
+    /* конечная позиция перемещения */
+    left: 90%;
+    
+    /* время перемещения */
+    transition: 1s; 
+}
+
+/* увеличение */
+
+ul.projects li ul li div.download a:hover img {
+    height: 100%;
+}

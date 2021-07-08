@@ -1,0 +1,59 @@
+html {
+    /* полосы прокрутки */
+    overflow: auto;
+}
+
+body {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    /* полосы прокрутки */
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* есть скроллбар */
+body.scrollbar-yes::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* полоса */
+body.scrollbar-yes::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.3);
+
+    box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 1);
+}
+
+/* ползунок */
+body.scrollbar-yes::-webkit-scrollbar-thumb { 
+    /* изменяется в скрипте onload-page.js */
+    background-image: url('../images/falcon9-down.png');
+
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+
+    /* размер фона */
+    background-size: contain;
+    -webkit-background-size: contain;
+    -o-background-size: contain;
+    -moz-background-size: contain;
+}
+
+/* нет скроллбара */
+body.scrollbar-no::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* полоса */
+body.scrollbar-no::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ползунок */
+body.scrollbar-no::-webkit-scrollbar-thumb { 
+    background: transparent;
+}

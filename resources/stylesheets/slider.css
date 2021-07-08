@@ -1,0 +1,93 @@
+/* цельный элемент */
+label.switch {
+    position: relative;
+
+    display: inline-block;
+
+    /* изменяется в скрипте onload-page.js */
+    width: 48px;
+    height: 24px;
+}
+
+/* отключение стандартной галочки */
+label.switch input {
+    display:none;
+}
+
+/* внешнее */
+span.slider {
+    cursor: pointer;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: pink;
+}
+
+span.slider:hover {
+    background-color: deeppink;
+}
+
+/* центр */
+span.slider:before {
+    content: "";
+
+    position: absolute;
+
+    background-color: darkviolet;
+
+    /* время перемещения */
+    transition: .4s;
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -o-transition: .4s;
+
+    /* изменяется в скрипте onload-page.js */
+    height: 18px;
+    width: 18px;
+
+    /* изменяется в скрипте onload-page.js */
+    left: 3px;
+    bottom: 3px;
+}
+
+span.slider:hover:before {
+    background-color: purple;
+}
+
+/* цвет при включенном состоянии */
+input:checked + span.slider {
+    background-color: orangered;
+}
+
+input:checked + span.slider:hover {
+    background-color: orange;
+}
+
+/* перемещение центра при включенном состоянии*/
+input:checked + span.slider:before {
+    /* изменяется в скрипте onload-page.js */
+    /* сдвиг по оси X */
+    transform: translateX(24px);
+    -webkit-transform: translateX(24px);
+    -ms-transform: translateX(24px);
+    -moz-transform: translateX(24px);
+    -o-transform: translateX(24px);
+}
+
+input:checked + span.slider:hover:before {
+    background-color: mediumorchid;
+}
+
+/* скругление внешнего */
+span.slider.round {
+    border-radius: 34px;
+}
+
+/* скругление центра */
+span.slider.round:before {
+    border-radius: 50%;
+}

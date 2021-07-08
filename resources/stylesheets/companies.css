@@ -1,0 +1,74 @@
+/* карьера */
+
+div.company {
+    width: 100%;
+
+    /* изменяется в скрипте onload-page.js */
+    min-height: 144px;
+
+    position: relative;
+    margin: 24px 0;
+}
+
+div.company p {
+    margin: 10px 0;
+}
+
+div.company div.company-icon {
+    margin-left: 10px;
+    margin-right: 30px;
+    
+    position: absolute;
+    
+    top: 50%;
+
+    /* сдвиг по оси Y */
+    transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+}
+
+div.company div.company-icon img {
+    /* изменяется в скрипте onload-page.js */
+    height: 144px;
+}
+
+div.company div.company-information {
+    margin: 0;
+
+    /* изменяется в скрипте onload-page.js */
+    margin-left: 184px;
+}
+
+div.company div.company-icon img:hover {
+    /* анимация вращения */
+    animation: rot 0.5s;
+    -webkit-animation: rot 0.5s;
+    -moz-animation: rot 0.5s;
+    -o-animation: rot 0.5s;
+}
+
+/* ключевые кадры */
+/* вращение */
+@keyframes rot {
+    0%   {transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg);}
+}
+@-webkit-keyframes rot {
+    0%   {transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg);}
+}
+@-moz-keyframes rot {
+    0%   {transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg);}
+}
+@-o-keyframes rot {
+    0%   {transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg);}
+}
+@-ms-keyframes rot {
+    0%   {transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg);}
+}
