@@ -23,7 +23,6 @@ ul div.rating img.play {
 }
 
 /* блеск */
-
 ul div.rating a.play {
     position: relative;
 
@@ -57,15 +56,15 @@ ul div.rating a.play:hover:after {
 }
 
 /* текст */
-
 b.kinopoisk {
     font-family: sans-serif;
     color: orangered;
 }
 
 /* блеск */
-
 ul div.rating a.rating-img {
+    height: 38px;
+
     position: relative;
 
     /* для изначальной прозрачности */

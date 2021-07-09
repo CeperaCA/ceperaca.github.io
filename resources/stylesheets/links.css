@@ -1,5 +1,4 @@
 /* ссылки */
-
 div.links {
     width: 100%;
 
@@ -8,20 +7,21 @@ div.links {
 }
 
 div.links div.icon {
-    /* изменяется в скрипте onload-page.js */
-    height: 48px;
-    width: 48px;
-
     float: left;
 
     margin-right: 10px;
+
+    /* изменяется в скрипте onload-page.js */
+    height: 48px;
+    width: 48px;
 }
 
 div.icon-DS {
+    position: relative;
+
     /* изменяется в скрипте onload-page.js */
     height: 48px;
-
-    position: relative;
+    width: 48px;
 }
 
 div.icon-DS div.text {
@@ -41,14 +41,13 @@ div.icon-DS div.text {
 }
 
 /* все иконки */
-
 div.icon img {
-    /* изменяется в скрипте onload-page.js */
-    height: 48px;
-
     /* визуальный эффект */
     filter: invert(15%) sepia(32%) saturate(455%) hue-rotate(303deg) brightness(104%) contrast(105%);
     -webkit-filter: invert(15%) sepia(32%) saturate(455%) hue-rotate(303deg) brightness(104%) contrast(105%);
+
+    /* изменяется в скрипте onload-page.js */
+    height: 48px;
 }
 
 div.icon img:hover {

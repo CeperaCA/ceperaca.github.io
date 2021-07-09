@@ -17,16 +17,16 @@ details div.image-spoiler img {
 }
 
 details div.image-spoiler div#left {
-    height: 400px;
-    margin-top: 37.5px;
     width: 100px;
 
     position: absolute;
-    /* изменяется в скрипте onload-page.js */
-    /* изменяется в скрипте image-spoiler.js */
-    left: 300px;
 
     transform: rotateY(20deg);
+
+    /* изменяется в скрипте image-spoiler.js */
+    height: 400px;
+    margin-top: 37.5px;
+    left: 300px;
 }
 
 details div.image-spoiler div#left img {
@@ -44,22 +44,25 @@ details div.image-spoiler div#left img {
 }
 
 details div.image-spoiler img#center {
+    max-width: 75%;
+    object-fit: contain;
+
     z-index: 1;
 
     transform: translateX(-50%);
 }
 
 details div.image-spoiler div#right {
-    height: 400px;
-    margin-top: 37.5px;
     width: 100px;
 
     position: absolute;
-    /* изменяется в скрипте onload-page.js */
-    /* изменяется в скрипте image-spoiler.js */
-    right: 300px;
-
+    
     transform: rotateY(-20deg);
+
+    /* изменяется в скрипте image-spoiler.js */
+    height: 400px;
+    margin-top: 37.5px;
+    right: 300px;
 }
 
 details div.image-spoiler div#right img {

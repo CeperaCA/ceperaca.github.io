@@ -48,8 +48,6 @@ span.slider:before {
     /* изменяется в скрипте onload-page.js */
     height: 18px;
     width: 18px;
-
-    /* изменяется в скрипте onload-page.js */
     left: 3px;
     bottom: 3px;
 }

@@ -40,9 +40,6 @@ function PageOnload() {
 
         /* изменение высоты картинок в ссылках на меня */
         ChangeSizeMyLinksImages(document.getElementsByTagName("img"), FontSize);
-
-        /* изменение отступов боковых изображений */
-        ChangeIndentSideImages(document.getElementsByClassName("image-spoiler"));
     }
 }
 
@@ -77,10 +74,10 @@ function PageScroll() {
         }
 
         if (currentST > tempST) {
-            document.getElementsByClassName("style-scrollbar")[0].innerHTML = "body.scrollbar-yes::-webkit-scrollbar-thumb {background-image: url('resources/images/falcon9-down.png');}";
+            document.getElementsByClassName("style-scrollbar")[0].innerHTML = "body.scrollbar-yes::-webkit-scrollbar-thumb {background-image: url('resources/images/falcon9-down.png')}";
         }
         else {
-            document.getElementsByClassName("style-scrollbar")[0].innerHTML = "body.scrollbar-yes::-webkit-scrollbar-thumb {background-image: url('resources/images/falcon9-up.png');}";
+            document.getElementsByClassName("style-scrollbar")[0].innerHTML = "body.scrollbar-yes::-webkit-scrollbar-thumb {background-image: url('resources/images/falcon9-up.png')}";
         }
 
         tempST = currentST;
@@ -103,7 +100,7 @@ function ChangeSizeMargin(Elements, FontSize) {
 function ChangeSizeSpoilers(Elements) {
     const SpoilersHeight = getComputedStyle(document.getElementsByTagName("summary")[0]).height;
 
-    document.head.appendChild(document.createElement("style")).innerHTML = "details:not([open]) {height: " + SpoilersHeight + ";}";
+    document.head.appendChild(document.createElement("style")).innerHTML = "details:not([open]) {height: " + SpoilersHeight + "}";
 }
 
 /* изменение высоты линий */
@@ -140,6 +137,7 @@ function ChangeSizePlayImages(Elements, FontSize) {
     for (let i = 0; i < Elements.length; i++) {
         if (Elements[i].tagName == "IMG") {
             Elements[i].style.height = FontSize + "px";
+            Elements[i].parentNode.style.height = FontSize + "px";
         }
     }
 }
@@ -195,24 +193,6 @@ function ChangeSizeMyLinksImages(Elements, FontSize) {
             Elements[i].parentNode.parentNode.style.height = (FontSize * 2) + "px";
             Elements[i].parentNode.parentNode.style.width = (FontSize * 2) + "px";
             Elements[i].parentNode.parentNode.parentNode.style.height = (FontSize * 2) + "px";
-        }
-    }
-}
-
-/* изменение отступов боковых изображений */
-function ChangeIndentSideImages(Elements) {
-    for (let i = 0; i < Elements.length; i++) {
-        if (Elements[i].childNodes[1].tagName == "CENTER") {
-            /* ширина центрального изображения */
-            PercentageProportion = 500 * 100 / Elements[i].childNodes[1].childNodes[3].height;
-            WidthCenterImage = Elements[i].childNodes[1].childNodes[3].width * PercentageProportion / 100;
-            
-            /* отступ боковых изображений */
-            IndentSideImages = (window.screen.width / 2) - (WidthCenterImage / 2) - 100;
-
-            /* отступ боковых изображений */
-            Elements[i].childNodes[1].childNodes[1].style.left = IndentSideImages + "px";
-            Elements[i].childNodes[1].childNodes[5].style.right = IndentSideImages + "px";
         }
     }
 }

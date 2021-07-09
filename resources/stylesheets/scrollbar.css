@@ -29,9 +29,6 @@ body.scrollbar-yes::-webkit-scrollbar-track {
 
 /* ползунок */
 body.scrollbar-yes::-webkit-scrollbar-thumb { 
-    /* изменяется в скрипте onload-page.js */
-    background-image: url('../images/falcon9-down.png');
-
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: center;
@@ -41,6 +38,9 @@ body.scrollbar-yes::-webkit-scrollbar-thumb {
     -webkit-background-size: contain;
     -o-background-size: contain;
     -moz-background-size: contain;
+
+    /* изменяется в скрипте onload-page.js */
+    background-image: url('../images/falcon9-down.png');
 }
 
 /* нет скроллбара */

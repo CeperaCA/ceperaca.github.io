@@ -1,18 +1,15 @@
 /* проекты */
-
 ul.projects li ul li {
     list-style-type: none;
 }
 
 ul.projects li ul li:before {
-    content: "⯈ ";
+    content: "▶ ";
 }
 
 ul.projects li ul li div.download {
     /* изменяется в скрипте onload-page.js */
     padding-left: 24px;
-
-    /* изменяется в скрипте onload-page.js */
     height: 48px;
 }
 
@@ -22,16 +19,15 @@ ul.projects li ul li div.download a img {
 }
 
 /* блеск */
-
 ul.projects li ul li div.download a {
-    /* изменяется в скрипте onload-page.js */
-    height: 48px;
-
     position: relative;
 
     /* для изначальной прозрачности */
     overflow: hidden;
     display: inline-block;
+
+    /* изменяется в скрипте onload-page.js */
+    height: 48px;
 }
 
 ul.projects li ul li div.download a:after {
@@ -59,7 +55,6 @@ ul.projects li ul li div.download a:hover:after {
 }
 
 /* увеличение */
-
 ul.projects li ul li div.download a:hover img {
     height: 100%;
 }

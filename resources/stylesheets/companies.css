@@ -1,13 +1,12 @@
 /* карьера */
-
 div.company {
     width: 100%;
 
-    /* изменяется в скрипте onload-page.js */
-    min-height: 144px;
-
     position: relative;
     margin: 24px 0;
+
+    /* изменяется в скрипте onload-page.js */
+    min-height: 144px;
 }
 
 div.company p {
