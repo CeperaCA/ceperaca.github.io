@@ -17,6 +17,8 @@ div.links div.icon {
 }
 
 div.icon-DS {
+    min-width: 100%;
+
     position: relative;
 
     /* изменяется в скрипте onload-page.js */
@@ -25,6 +27,8 @@ div.icon-DS {
 }
 
 div.icon-DS div.text {
+    width: 100%;
+
     position: absolute;
     
     top: 50%;
