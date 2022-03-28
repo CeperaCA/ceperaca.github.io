@@ -4,54 +4,44 @@ body {
 
     overflow: hidden;
 
-    height: 500px;
-    width: 100%;
+    margin: 0;
+}
 
-    position: relative;
-
+/* блок галереи */
+div.gallery{    
     perspective: 500px;
 }
 
+/* все изображения*/
 img {
-    height: 95%;
-
-    float: left;
-
     position: absolute;
-    top: 0;
+
+    height: 100%;
 }
 
 /* левое */
 div#left {
-    width: 100px;
-
     position: absolute;
 
     transform: rotateY(20deg);
-
-    /* изменяется в скрипте image-spoiler.js */
-    height: 400px;
-    margin-top: 37.5px;
-    left: 300px;
 }
 
 div#left img {
     position: absolute;
-    left: 0;
-
-    height: 100%;
 
     /* обрезка изображения */
     width: 100%;
     object-fit: cover;
-    object-position: 0 0;
+    object-position: left;
 
     cursor: pointer;
 }
 
 /* центральное */
-img#center {
+center img#center {
+    /* ограничение для портретного варианта галереи */
     max-width: 75%;
+
     object-fit: contain;
 
     z-index: 1;
@@ -61,28 +51,18 @@ img#center {
 
 /* правое */
 div#right {
-    width: 100px;
-
     position: absolute;
     
     transform: rotateY(-20deg);
-
-    /* изменяется в скрипте image-spoiler.js */
-    height: 400px;
-    margin-top: 37.5px;
-    right: 300px;
 }
 
 div#right img {
     position: absolute;
-    right: 0;
-
-    height: 100%;
 
     /* обрезка изображения */
     width: 100%;
     object-fit: cover;
-    object-position: 0 0;
+    object-position: right;
 
     cursor: pointer;
 }

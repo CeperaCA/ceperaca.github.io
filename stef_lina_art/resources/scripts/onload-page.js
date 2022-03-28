@@ -1,18 +1,16 @@
-/* при загрузке страницы */
+// при загрузке страницы
 function PageOnload() {
-    /* после загрузки */
+    // после загрузки
     window.onload = function() {
-        /* запрет на открытие картинок */
+        // запрет на открытие картинок
         document.oncontextmenu = disablecontext;
 
-        /* ===============ИЗМЕНЕНИЕ РАЗМЕРОВ=============== */
-
-        /* изменение размеров отступов боковых изображений */
-        ChangeSizeImage(document.getElementsByTagName("center"));
+        // изменение размеров изображений
+        ChangeSizeImage(document.getElementsByTagName("center")[0]);
     }
 }
 
-/* запрет на открытие картинок */
+// запрет на открытие картинок
 function disablecontext(e) {
 	var clickedEl = (e==null) ? event.srcElement.tagName : e.target.tagName;
     
@@ -21,46 +19,87 @@ function disablecontext(e) {
 	}
 }
 
-/* ===============ИЗМЕНЕНИЕ РАЗМЕРОВ=============== */
+// изменение размеров изображений
+function ChangeSizeImage(ParentCenterImage) {
+    // блок галереи
+    let DivGallery = ParentCenterImage.parentNode;
+    // центральное изображение
+    let CenterImage = ParentCenterImage.childNodes[1];
+    // левое изображение
+    let LeftImage = DivGallery.childNodes[1];
+    // правое изображение
+    let RightImage = DivGallery.childNodes[5];
 
-/* изменение размеров отступов */
-function ChangeSizeImage(Elements) {
-    WidthScreen = document.documentElement.clientWidth;
+    // ширина и высота экрана
+    let WidthScreen = document.documentElement.clientWidth;
+    let HeightScreen = document.documentElement.clientHeight;
 
-    /* ширина центрального изображения */
-    if (Elements[0].childNodes[1].tagName == "IMG") {
-        WidthCenterImage = Elements[0].childNodes[1].width;
-        StandartHeightCenterImage = Elements[0].childNodes[1].naturalHeight;
-        StandartWidthCenterImage = Elements[0].childNodes[1].naturalWidth;
+    // настройка ширины и высоты блока галереи, а также левого/верхнего отступа
+    if (WidthScreen < HeightScreen) {
+        // портрет
+        DivGallery.style.height = HeightScreen + "px";
 
-        /* высота центрального изображения */
-        HeightCenterImage = StandartHeightCenterImage / (StandartWidthCenterImage / WidthCenterImage);
+        DivGallery.style.width = (WidthScreen * 0.85) + "px";
+        DivGallery.style.marginLeft = ((WidthScreen * 0.15) / 2) + "px";
+    }
+    else{
+        // альбом
+        DivGallery.style.height = (HeightScreen * 0.75) + "px";
+        DivGallery.style.marginTop = ((HeightScreen * 0.25) / 2) + "px";
+
+        DivGallery.style.width = WidthScreen + "px";
     }
 
-    /* настройка отступа боковых изображений */
-    if (WidthCenterImage > (WidthScreen * 0.75)) {
-        IndentSideImages = (WidthScreen / 2) - (WidthCenterImage / 2) - 100;
-    }
-    else if (((WidthScreen / 2) - (WidthCenterImage / 2)) < 150) {
-        IndentSideImages = (WidthScreen / 2) - (WidthCenterImage / 2) - 75;
-    }
-    else {
-        IndentSideImages = (WidthScreen / 2) - (WidthCenterImage / 2) - 100;
-    }
+    // ширина центрального изображения
+    let WidthCenterImage = CenterImage.width;
+    // стандартная ширина и высота центрального изображения
+    let StandartHeightCenterImage = CenterImage.naturalHeight;
+    let StandartWidthCenterImage = CenterImage.naturalWidth;
+    // высота центрального изображения
+    let HeightCenterImage = StandartHeightCenterImage / (StandartWidthCenterImage / WidthCenterImage);
 
-    /* отступ боковых изображений */
-    if (Elements[0].parentNode.childNodes[5].id == "right") {
-        Elements[0].parentNode.childNodes[5].style.right = IndentSideImages + "px";
-    }
-    if (Elements[0].parentNode.childNodes[1].id == "left") {
-        Elements[0].parentNode.childNodes[1].style.left = IndentSideImages + "px";
-    }
+    // настройка высоты боковых изображений
+    LeftImage.style.height = (HeightCenterImage * 0.9) + "px";
+    RightImage.style.height = (HeightCenterImage * 0.9) + "px";
 
-    /* высота боковых изображений */
-    Elements[0].parentNode.childNodes[1].style.height = (HeightCenterImage - 75) + "px";
-    Elements[0].parentNode.childNodes[5].style.height = (HeightCenterImage - 75) + "px";
+    // высота боковых изображений
+    let HeightSideImage = LeftImage.clientHeight;
+    // высота блока галереи
+    let HeightDivGallery = DivGallery.clientHeight;
 
-    /* центровка боковых изображений по вертикали */
-    Elements[0].parentNode.childNodes[1].style.marginTop = (((400 - HeightCenterImage) / 2) + 75) + "px";
-    Elements[0].parentNode.childNodes[5].style.marginTop = (((400 - HeightCenterImage) / 2) + 75) + "px";
+    // настройка верхнего отступа боковых изображений
+    LeftImage.style.marginTop = ((HeightDivGallery - HeightSideImage) / 2) + "px";
+    RightImage.style.marginTop = ((HeightDivGallery - HeightSideImage) / 2) + "px";
+
+    // высота блока галереи
+    let WidthDivGallery = DivGallery.clientWidth;
+
+    // настройка ширины боковых изображений
+    if (WidthScreen < HeightScreen) {
+        // портрет
+        LeftImage.style.width = (WidthDivGallery * 0.25) + "px";
+        RightImage.style.width = (WidthDivGallery * 0.25) + "px";
+    }
+    else{
+        // альбом
+        LeftImage.style.width = (WidthDivGallery * 0.05) + "px";
+        RightImage.style.width = (WidthDivGallery * 0.05) + "px";
+    }
+    
+    // ширина боковых изображений
+    let WidthSideImage = LeftImage.clientWidth;
+    // отступ бокового изображения
+    let SideIndentImages = ((WidthScreen - WidthCenterImage) / 2) - WidthSideImage;
+
+    // настройка отступов боковых изображений
+    if (WidthScreen < HeightScreen) {
+        // портрет
+        LeftImage.style.left = "0px";
+        RightImage.style.right = "0px";
+    }
+    else{
+        // альбом
+        LeftImage.style.left = SideIndentImages + "px";
+        RightImage.style.right = SideIndentImages + "px";
+    }
 }
