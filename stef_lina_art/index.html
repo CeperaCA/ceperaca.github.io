@@ -17,11 +17,17 @@
         <link rel="stylesheet" href="resources/stylesheets/main.css">
 
         <!-- скрипты -->
-        <script src="resources/scripts/image-spoiler.js"></script>
         <script src="resources/scripts/onload-page.js"></script>
+        <script src="resources/scripts/onresize-page.js"></script>
+        <script src="resources/scripts/image-spoiler.js"></script>
     </head>
 
     <body>
+        <!-- при загрузке страницы -->
+        <script>PageOnload()</script>
+        <!-- при изменении размеров страницы -->
+        <script>PageOnresize()</script>
+
         <div class="gallery">
             <div id="left">
                 <img src="resources/images/027.jpg" onclick="ChangeNumberImage(this, 27)">
@@ -33,8 +39,5 @@
                 <img src="resources/images/002.jpg" onclick="ChangeNumberImage(this, 27)">
             </div>
         </div>
-
-        <!-- при загрузке страницы -->
-        <script>PageOnload()</script>
     </body>
 </html>
