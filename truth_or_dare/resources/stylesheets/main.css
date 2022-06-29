@@ -1,0 +1,59 @@
+/* тело */
+body {
+    background-color: DarkGreen;
+
+    overflow: hidden;
+
+    text-align: center;
+
+    color: LightCyan;
+}
+
+/* настройки */
+div.forma {
+    border: 3px solid black;
+
+    margin: 1%;
+    padding: 1%;
+}
+
+/* игрок в списке игроков */
+div.people{
+    margin-top: 5px;
+}
+
+/* кнопка удаления игрока */
+button.delete-people{
+    border: none;
+    border-radius: 50%;
+}
+
+/* игра */
+div.button {
+    border: 3px solid black;
+
+    margin: 1%;
+    padding: 1%;
+}
+
+/* кнопки */
+div.button input {
+    margin: 0 3px;
+}
+
+/* задание */
+div.button p {
+    margin-bottom: 0;
+
+    font-weight: bold;
+
+    color: red;
+}
+
+/* скрытие заданий */
+div.truth {
+    visibility: hidden;
+}
+div.dare {
+    visibility: hidden;
+}
