@@ -78,6 +78,10 @@ function CheckPeople() {
             /*добавить текст задания*/
             document.getElementsByClassName("button")[0].append(document.createElement("p"));
         }
+        else{
+            /*очистка текста задания*/
+            document.getElementsByClassName("button")[0].getElementsByTagName("p")[0].innerHTML = '';
+        }
     }
     else{
         /*очистить выбранного игрока*/
