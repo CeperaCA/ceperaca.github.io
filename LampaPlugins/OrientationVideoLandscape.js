@@ -6,7 +6,8 @@
 		mutationsList.forEach(function(mutation) {
 			// Для каждого добавленного элемента проверяем, является ли он видео
 			mutation.addedNodes.forEach(function(node) {
-				// Проверяем, если добавленный элемент имеет класс 'player'
+				console.log(node);
+				/* // Проверяем, если добавленный элемент имеет класс 'player'
 				if (node.classList && node.classList.contains('player')) {
 					// Получаем видео элемент
 					const video = node.querySelector('video');
@@ -23,7 +24,7 @@
 						video.style.marginTop = "-100vw";
 						video.style.objectFit = "cover";  // Убедимся, что видео не деформируется
 					}
-				}
+				} */
 			});
 		});
 	});
