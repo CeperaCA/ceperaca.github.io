@@ -13,11 +13,11 @@
 				
 				if (video) {
 					// Применяем стили для горизонтальной ориентации видео
-					video.style.width = "100vh";
-					video.style.height = "100vw";
-					video.style.transform = "rotate(90deg)";
-					video.style.transformOrigin = "bottom left";
-					video.style.marginTop = "-100vw";
+					video.style.width = "100vh !important";
+					video.style.height = "100vw !important";
+					video.style.transform = "rotate(90deg) !important";
+					video.style.transformOrigin = "bottom left !important";
+					video.style.marginTop = "-100vw !important";
 					//video.style.cssText = "width: 100vh; height: 100vw; transform: rotate(90deg); transform-origin: bottom left; margin-top: -100vw;";
 				}
 			}
