@@ -13,7 +13,14 @@
 				
 				if (video) {
 					// Применяем стили для горизонтальной ориентации видео
-					video.style.cssText = "width: 100vh; height: 100vw; transform: rotate(90deg); transform-origin: bottom left; margin-top: -100vw; object-fit: cover; display: block; position: absolute;";
+					oldWidth  = video.style.width;
+					oldHeight = video.style.height;
+					
+					video.style.width           = oldHeight;
+					video.style.height          = oldWidth;
+					video.style.transform       = "rotate(90deg)";
+					video.style.transformOrigin = "bottom left";
+					video.style.marginTop       = "-100vw";
 				}
 			}
 		});
@@ -23,6 +30,6 @@
 	// Настройки для наблюдения за DOM
 	observer.observe(document.body, {
 		childList: true, // Следим за добавлением новых элементов
-		subtree: true    // Следим за вложенными изменениями
+		subtree:   true  // Следим за вложенными изменениями
 	});
 })();
