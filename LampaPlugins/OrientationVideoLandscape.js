@@ -14,12 +14,12 @@
 					if (video) {
 						setTimeout(function() {
 							// Применяем стили для горизонтальной ориентации видео
-							video.style.width = "100vh";
-							video.style.height = "100vw";
-							video.style.transform = "rotate(90deg)";
+							video.style.width           = "100vh";
+							video.style.height          = "100vw";
+							video.style.transform       = "rotate(90deg)";
 							video.style.transformOrigin = "bottom left";
-							video.style.marginTop = "-100vw";
-							video.style.objectFit = "cover";  // Убедимся, что видео не деформируется
+							video.style.marginTop       = "-100vw";
+							video.style.objectFit       = "cover"; // Убедимся, что видео не деформируется
 							
 							// Останавливаем наблюдение после применения стилей
 							observer.disconnect();
@@ -33,6 +33,6 @@
 	// Настройки для наблюдения за DOM
 	observer.observe(document.body, {
 		childList: true, // Следим за добавлением новых элементов
-		subtree: true    // Следим за вложенными изменениями
+		subtree:   true  // Следим за вложенными изменениями
 	});
 })();
