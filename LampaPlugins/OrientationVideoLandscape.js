@@ -6,8 +6,9 @@
 	mutationsList.forEach(function(mutation) {
 		// Для каждого добавленного элемента проверяем, является ли он видео
 		mutation.addedNodes.forEach(function(node) {
+			console.log("=====================mutation=====================");
 			if (node.tagName === 'VIDEO') {
-				console.log("=====================mutation("=====================");
+				console.log("=====================VIDEO=====================");
 				node.style.cssText = "width: 100vh; height: 100vw; transform: rotate(90deg); transform-origin: bottom left; margin-top: -100vw;";
 			}
 		});
