@@ -6,7 +6,7 @@
 		mutationsList.forEach(function(mutation) {
 			// Для каждого добавленного элемента проверяем, является ли он видео
 			mutation.addedNodes.forEach(function(node) {
-				console.log(node);
+				console.log('Добавлен новый элемент:', node);
 				/* // Проверяем, если добавленный элемент имеет класс 'player'
 				if (node.classList && node.classList.contains('player')) {
 					// Получаем видео элемент
