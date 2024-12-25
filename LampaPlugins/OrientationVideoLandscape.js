@@ -1,6 +1,8 @@
 (function () {
 	'use strict';
 
+	console.log('start OrientationVideoLandscape');
+	
 	// Используем MutationObserver для отслеживания добавления элемента video на страницу
 	const observer = new MutationObserver(function(mutationsList, observer) {
 		mutationsList.forEach(function(mutation) {
