@@ -6,21 +6,21 @@
 		mutationsList.forEach(function(mutation) {
 			// Для каждого добавленного элемента проверяем, является ли он видео
 			mutation.addedNodes.forEach(function(node) {
-				console.log('Добавлен новый элемент:', node);
 				// Проверяем, если добавленный элемент имеет класс 'player'
 				if (node.classList && node.classList.contains('player')) {
 					// Получаем видео элемент
 					let video = node.querySelector('video');
 
 					if (video) {
-						console.log('Видео элемент:', video);
-						// Применяем стили для горизонтальной ориентации видео
-						// video.style.width = "100vh";
-						// video.style.height = "100vw";
-						// video.style.transform = "rotate(90deg)";
-						// video.style.transformOrigin = "bottom left";
-						// video.style.marginTop = "-100vw";
-						// video.style.objectFit = "cover";  // Убедимся, что видео не деформируется
+						setTimeout(function() {
+							// Применяем стили для горизонтальной ориентации видео
+							video.style.width = "100vh";
+							video.style.height = "100vw";
+							video.style.transform = "rotate(90deg)";
+							video.style.transformOrigin = "bottom left";
+							video.style.marginTop = "-100vw";
+							video.style.objectFit = "cover";  // Убедимся, что видео не деформируется
+						}, 5);
 					}
 				}
 			});
