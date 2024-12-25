@@ -20,9 +20,6 @@
 							video.style.transformOrigin = "bottom left";
 							video.style.marginTop       = "-100vw";
 							video.style.objectFit       = "cover"; // Убедимся, что элемент video не деформируется
-							
-							// Останавливаем наблюдение после применения стилей
-							observer.disconnect();
 						}, 1000);
 					}
 				}
