@@ -29,7 +29,7 @@
 							console.log(video.style.transformOrigin);
 							console.log(video.style.marginTop);
 							console.log(video.style.objectFit);
-						}, 1000);
+						}, 2000);
 					}
 				}
 			});
