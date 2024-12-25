@@ -12,6 +12,9 @@
 					const video = node.querySelector('video');
 
 					if (video) {
+						console.log(video.style.width);
+						console.log(video.style.height);
+						console.log(video.style.transform);
 						// Применяем стили для горизонтальной ориентации видео
 						video.style.width = "100vh";
 						video.style.height = "100vw";
