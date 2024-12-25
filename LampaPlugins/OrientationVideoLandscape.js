@@ -19,11 +19,6 @@
 						video.style.transformOrigin = "bottom left";
 						video.style.marginTop = "-100vw";
 						video.style.objectFit = "cover";  // Убедимся, что видео не деформируется
-
-						// Принудительное обновление стилей (можно использовать requestAnimationFrame)
-						setTimeout(function() {
-							video.style.transition = "none";  // Отключаем анимацию для мгновенных изменений
-						}, 0); // Обновляем после того, как браузер применит изменения
 					}
 				}
 			});
