@@ -8,26 +8,23 @@
 			mutation.addedNodes.forEach(function(node) {
 				// Проверяем, если добавленный элемент имеет класс player
 				if (node.classList && node.classList.contains('player')) {
-					// Проверяем, что это мобильное устройство в портретной ориентации
-					if (document.body.classList.contains('true--mobile orientation--portrait')) {
-						// Получаем video элемент
-						const video = node.querySelector('video');
+					// Получаем video элемент
+					const video = node.querySelector('video');
 
-						if (video) {
-							setTimeout(function() {
-								// Применяем стили для горизонтальной ориентации элемента video
-								video.style.width           = "100vh";
-								video.style.height          = "100vw";
-								video.style.transform       = "rotate(90deg)";
-								video.style.transformOrigin = "bottom left";
-								video.style.marginTop       = "-100vw";
-								video.style.objectFit       = "cover"; // Убедимся, что элемент video не деформируется
-								
-								// Останавливаем наблюдение после применения стилей
-								observer.disconnect();
-							}, 1000);
-						}
-						}
+					if (video) {
+						setTimeout(function() {
+							// Применяем стили для горизонтальной ориентации элемента video
+							video.style.width           = "100vh";
+							video.style.height          = "100vw";
+							video.style.transform       = "rotate(90deg)";
+							video.style.transformOrigin = "bottom left";
+							video.style.marginTop       = "-100vw";
+							video.style.objectFit       = "cover"; // Убедимся, что элемент video не деформируется
+							
+							// Останавливаем наблюдение после применения стилей
+							observer.disconnect();
+						}, 1000);
+					}
 				}
 			});
 		});
