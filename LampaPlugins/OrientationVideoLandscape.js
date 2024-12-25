@@ -7,6 +7,7 @@
 		// Для каждого добавленного элемента проверяем, является ли он видео
 		mutation.addedNodes.forEach(function(node) {
 			if (node.tagName === 'VIDEO') {
+				console.log("=====================mutation("=====================");
 				node.style.cssText = "width: 100vh; height: 100vw; transform: rotate(90deg); transform-origin: bottom left; margin-top: -100vw;";
 			}
 		});
