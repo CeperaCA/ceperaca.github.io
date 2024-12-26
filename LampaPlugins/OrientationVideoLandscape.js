@@ -1,6 +1,8 @@
 (function () {
 	'use strict';
 	
+	console.log('v0.1');
+	
 	// Используем MutationObserver для отслеживания добавления элемента video на страницу
 	const observer = new MutationObserver(function(mutationsList, observer) {
 		mutationsList.forEach(function(mutation) {
@@ -14,12 +16,17 @@
 					if (video) {
 						setTimeout(function() {
 							// Применяем стили для горизонтальной ориентации элемента video
-							//video.style.width           = "100vh";
-							//video.style.height          = "100vw";
-							video.style.transform       = "rotate(90deg)";
-							//video.style.transformOrigin = "bottom left";
-							//video.style.marginTop       = "-100vw";
-							//video.style.objectFit       = "cover"; // Убедимся, что элемент video не деформируется
+							//video.style.width           = '100vh';
+							//video.style.height          = '100vw';
+							video.style.transform       = 'rotate(90deg)';
+							//video.style.transformOrigin = 'bottom left';
+							//video.style.marginTop       = '-100vw';
+							//video.style.objectFit       = 'cover'; // Убедимся, что элемент video не деформируется
+							
+							console.log(video.style.transform);
+							
+							// Останавливаем наблюдение после применения стилей
+							observer.disconnect();
 						}, 1000);
 					}
 				}
