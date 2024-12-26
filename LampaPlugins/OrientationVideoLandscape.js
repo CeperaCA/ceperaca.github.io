@@ -13,6 +13,7 @@
 					const panel = node.querySelector('.player-panel__right');
 
 					if (panel) {
+						console.log(panel.lastElementChild);
 						panel.append(panel.lastElementChild);
 						
 						// Останавливаем наблюдение
