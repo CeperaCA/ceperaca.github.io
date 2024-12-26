@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 	
-	console.log('OrientationVideoLandscape v0.1');
+	console.log('[OrientationVideoLandscape]: ', 'v0.1');
 	
 	// Используем MutationObserver для отслеживания добавления элементов на страницу
 	const observer = new MutationObserver(function(mutationsList, observer) {
@@ -10,10 +10,11 @@
 			mutation.addedNodes.forEach(function(node) {
 				// Проверяем, если добавленный элемент имеет класс player
 				if (node.classList && node.classList.contains('player')) {
+					console.log('[OrientationVideoLandscape]: ', node);
 					const panel = node.querySelector('.player-panel__right');
 
 					if (panel) {
-						console.log(panel.lastElementChild);
+						console.log('[OrientationVideoLandscape]: ', panel.lastElementChild);
 						panel.append(panel.lastElementChild);
 						
 						// Останавливаем наблюдение
