@@ -37,7 +37,6 @@
                                     video.style.transform       = 'rotate(90deg)';
                                     video.style.transformOrigin = 'bottom left';
                                     video.style.marginTop       = '-100vw';
-                                    video.style.objectFit       = 'cover'; // Убедимся, что видео не деформируется
                                 } else {
                                     video.removeAttribute('style');
                                 }
