@@ -25,6 +25,13 @@ body {
     margin-bottom: 20px;
 }
 
+.header .logo {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto 12px;
+}
+
 .header h1 {
     font-size: 1.4rem;
     margin-bottom: 4px;
@@ -69,6 +76,47 @@ body {
     line-height: 1.2;
 }
 
+.error {
+    text-align: center;
+    opacity: 0.7;
+    padding: 24px;
+    grid-column: 1 / -1;
+}
+
+.footer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.author-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--card-bg);
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.15s, transform 0.15s;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.author-link:hover {
+    background: #2e2e50;
+}
+
+.author-link:active {
+    transform: scale(0.97);
+}
+
+.author-icon {
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
 @media (max-width: 340px) {
     #app {
         grid-template-columns: repeat(2, 1fr);
@@ -76,11 +124,4 @@ body {
     .set-card .set-name {
         font-size: 0.8rem;
     }
-}
-
-.error {
-    text-align: center;
-    opacity: 0.7;
-    padding: 24px;
-    grid-column: 1 / -1;
 }

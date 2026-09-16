@@ -5,14 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Авторский каталог стикеров</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
     <script src="https://st.max.ru/js/max-web-app.js"></script>
 </head>
 <body>
     <header class="header">
+        <img src="logo.svg" alt="" class="logo">
         <h1>Авторский каталог стикеров</h1>
     </header>
 
     <main id="app"></main>
+
+    <footer class="footer">
+        <a href="#" id="authorLink" class="author-link">
+            <svg class="author-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.42 0-8 2.24-8 5v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1c0-2.76-3.58-5-8-5z"
+                      fill="currentColor"/>
+            </svg>
+            <span>Автор каталога</span>
+        </a>
+    </footer>
 
     <script src="app.js"></script>
 </body>
