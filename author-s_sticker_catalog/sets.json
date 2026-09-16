@@ -2,51 +2,61 @@
     {
         "name": "Тошка",
         "link": "https://max.ru/stickerset/lQui7i-ZMyCHKdKvCudEe6OiJuut5zTW6VCtNeI8wQk",
-        "cover": "stickers/set01_cover.png"
+        "folder": "set01",
+        "cover": "13.webp"
     },
     {
         "name": "Тошка",
         "link": "https://max.ru/stickerset/u1nqyWZy9lyEFe-TLPHPJHV6WgBToDQTgO1g_LWV7PE",
-        "cover": "stickers/set02_cover.png"
+        "folder": "set02",
+        "cover": "04.webp"
     },
     {
         "name": "Булка",
         "link": "https://max.ru/stickerset/64ATW6UFgq33F9HcWocItxmyyr_nKiuTXeWicL3EO4k",
-        "cover": "stickers/set03_cover.png"
+        "folder": "set03",
+        "cover": "26.webp"
     },
     {
         "name": "Бегемоша",
         "link": "https://max.ru/stickerset/NHtvXD175NQM7Chw_rM7bm0V2ek3tUKTBTEVSi2CB60",
-        "cover": "stickers/set04_cover.png"
+        "folder": "set04",
+        "cover": "40.webp"
     },
     {
         "name": "Димка",
         "link": "https://max.ru/stickerset/CYPu1n4UXiQ-9mD7fyNNMfhUbFaITYwP9_kWRIeEfbM",
-        "cover": "stickers/set05_cover.png"
+        "folder": "set05",
+        "cover": "05.webp"
     },
     {
         "name": "Алиса говорит",
         "link": "https://max.ru/stickerset/IKyym4uYBYq8vSU9W3U3xIXOpJw8aDEok7lAzn9rj8E",
-        "cover": "stickers/set06_cover.png"
+        "folder": "set06",
+        "cover": "01.webp"
     },
     {
         "name": "Кризис среднего рока",
         "link": "https://max.ru/stickerset/pv6r78_yPrm5DI8X7hSGzhDdi7fPmy2ZhqQ75w2hCzk",
-        "cover": "stickers/set07_cover.png"
+        "folder": "set07",
+        "cover": "01.webp"
     },
     {
         "name": "Машуля",
         "link": "https://max.ru/stickerset/WrsP0W55aNxEKtWmwKTngRxGkn3Y6h7vQHfLqDP-Sro",
-        "cover": "stickers/set08_cover.png"
+        "folder": "set08",
+        "cover": "12.webp"
     },
     {
         "name": "Наш ТЦР",
         "link": "https://max.ru/stickerset/N89cswZ4ASrqSOVyXDetirpquJfKMVbI7VkAKnt_Bkw",
-        "cover": "stickers/set09_cover.png"
+        "folder": "set09",
+        "cover": "25.webp"
     },
     {
         "name": "Катя пишет",
         "link": "https://max.ru/stickerset/uNapi7hdgQwU5JKNjqfrzk82aUcFuDg3DeCXbyum1q8",
-        "cover": "stickers/set10_cover.png"
+        "folder": "set10",
+        "cover": "06.webp"
     }
 ]
