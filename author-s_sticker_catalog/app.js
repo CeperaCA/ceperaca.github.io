@@ -1,4 +1,3 @@
-// ====== ИНИЦИАЛИЗАЦИЯ MAX BRIDGE ======
 const webApp = window.WebApp;
 if (webApp) {
     webApp.ready?.();
@@ -7,7 +6,6 @@ if (webApp) {
     console.warn("MAX Bridge не обнаружен. Работаем в обычном браузере.");
 }
 
-// ====== ЗАГРУЗКА ДАННЫХ ======
 const appContainer = document.getElementById('app');
 let STICKER_SETS = [];
 
@@ -24,7 +22,6 @@ async function loadSets() {
     return true;
 }
 
-// ====== РЕНДЕР КАТАЛОГА ======
 function renderCatalog() {
     appContainer.innerHTML = STICKER_SETS.map((set, i) => `
         <div class="set-card" data-index="${i}">
@@ -41,19 +38,15 @@ function renderCatalog() {
     });
 }
 
-// ====== ОТКРЫТИЕ ССЫЛКИ ======
 function openSet(url) {
     const wa = window.WebApp;
-    // openLink открывает ссылку во внешнем браузере и НЕ закрывает мини-приложение
     if (wa && typeof wa.openLink === 'function') {
         wa.openLink(url);
     } else {
-        // Фолбэк для обычного браузера
         window.open(url, '_blank');
     }
 }
 
-// ====== СТАРТ ======
 (async () => {
     const ok = await loadSets();
     if (ok) renderCatalog();
