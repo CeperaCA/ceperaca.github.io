@@ -44,15 +44,13 @@ function renderCatalog() {
 // ====== ОТКРЫТИЕ ССЫЛКИ ======
 function openSet(url) {
     const wa = window.WebApp;
-    if (wa && wa.platform && wa.platform !== 'web' && typeof wa.openMaxLink === 'function') {
-        try {
-            wa.openMaxLink(url);
-            return;
-        } catch (e) {
-            console.warn('openMaxLink не сработал, используем window.open', e);
-        }
+    // openLink открывает ссылку во внешнем браузере и НЕ закрывает мини-приложение
+    if (wa && typeof wa.openLink === 'function') {
+        wa.openLink(url);
+    } else {
+        // Фолбэк для обычного браузера
+        window.open(url, '_blank');
     }
-    window.open(url, '_blank');
 }
 
 // ====== СТАРТ ======
