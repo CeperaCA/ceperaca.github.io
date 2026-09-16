@@ -124,6 +124,7 @@ async function openPreview(index) {
     modalTitle.textContent = set.name;
     modalStickers.innerHTML = '<div class="sticker-loading">Загрузка…</div>';
     modal.classList.remove('hidden');
+    document.body.classList.add('modal-open');
 
     const files = await getStickerFiles(set);
 
@@ -140,6 +141,7 @@ async function openPreview(index) {
 
 function closePreview() {
     modal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
     currentSet = null;
 }
 

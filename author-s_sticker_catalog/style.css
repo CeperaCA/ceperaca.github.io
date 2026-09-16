@@ -20,6 +20,10 @@ body {
     min-height: 100vh;
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
 .header {
     text-align: center;
     margin-bottom: 20px;
@@ -168,8 +172,8 @@ body {
 
 .sticker-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
     overflow-y: auto;
     padding-right: 4px;
     margin-bottom: 16px;
@@ -211,18 +215,6 @@ body {
 
 .btn-add:active {
     transform: scale(0.98);
-}
-
-@media (max-width: 340px) {
-    #app {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .set-card .set-name {
-        font-size: 0.8rem;
-    }
-    .sticker-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
 }
 
 .sticker-grid::-webkit-scrollbar {
@@ -273,4 +265,16 @@ body::-webkit-scrollbar-thumb:hover {
 body {
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+@media (max-width: 340px) {
+    #app {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .set-card .set-name {
+        font-size: 0.8rem;
+    }
+    .sticker-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
