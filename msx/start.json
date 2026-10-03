@@ -1,0 +1,6 @@
+{
+  "name": "Мои сервисы",
+  "version": "1.0.0",
+  "parameter": "content:{PREFIX}https://ceperaca.github.io/msx/data/home.json",
+  "welcome": "none"
+}
