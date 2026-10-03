@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00a6ed"/><stop offset="1" stop-color="#005cff"/></linearGradient></defs>
+<rect width="1200" height="800" rx="55" fill="url(#g)"/>
+<circle cx="600" cy="275" r="145" fill="white" opacity=".96"/>
+<text x="600" y="330" text-anchor="middle" font-family="Arial" font-size="130" font-weight="700" fill="#005cff">L</text>
+<text x="600" y="570" text-anchor="middle" font-family="Arial" font-size="70" font-weight="700" fill="white">LIFT</text>
+<text x="600" y="645" text-anchor="middle" font-family="Arial" font-size="32" fill="white">ФИЛЬМЫ • СЕРИАЛЫ</text>
+</svg>
