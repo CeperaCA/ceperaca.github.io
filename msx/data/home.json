@@ -1,9 +1,7 @@
 {
-  "name": "Мои сервисы",
-  "version": "1.0.0",
+  "version": "1.0",
   "type": "pages",
   "style": "rounded",
-  "background": "https://ceperaca.github.io/msx/images/background.svg",
   "transparent": 0,
   "pages": [
     {
