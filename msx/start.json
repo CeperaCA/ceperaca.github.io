@@ -1,6 +1,5 @@
 {
   "name": "HomeTheater",
   "version": "1.0",
-  "parameter": "content:{PREFIX}ceperaca.github.io/msx/data/home.json",
-  "welcome": "none"
+  "parameter": "content:{PREFIX}ceperaca.github.io/msx/data/home.json"
 }
