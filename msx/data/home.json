@@ -2,7 +2,6 @@
   "name": "HomeTheater",
   "version": "1.0",
   "type": "pages",
-  "transparent": 0,
   "pages": [
     {
       "items": [
@@ -10,33 +9,21 @@
           "id": "lampa",
           "type": "teaser",
           "layout": "0,0,2,2",
-          "title": "LAMPA UNCENSORED",
-          "alignment": "center",
           "image": "https://ceperaca.github.io/msx/images/lampa.jpg",
-          "imageFiller": "width-center",
-          "imageOverlay": 0,
           "action": "link:https://bylampa.online"
         },
         {
           "id": "zona",
           "type": "teaser",
           "layout": "2.2,0,2,2",
-          "title": "ZONA",
-          "alignment": "center",
           "image": "https://ceperaca.github.io/msx/images/zona.jpg",
-          "imageFiller": "width-center",
-          "imageOverlay": 0,
           "action": "link:https://msx.zona.ms"
         },
         {
           "id": "lift",
           "type": "teaser",
           "layout": "4.4,0,2,2",
-          "title": "LIFT",
-          "alignment": "center",
           "image": "https://ceperaca.github.io/msx/images/lift.jpg",
-          "imageFiller": "width-center",
-          "imageOverlay": 0,
           "action": "link:https://lift3.ws"
         }
       ]
