@@ -9,7 +9,7 @@
         {
           "id": "lampa",
           "type": "teaser",
-          "layout": "0,0,4,6",
+          "layout": "0.5,1,3,4",
           "title": "LAMPA UNCENSORED",
           "alignment": "center",
           "image": "https://ceperaca.github.io/msx/images/lampa.jpg",
@@ -20,7 +20,7 @@
         {
           "id": "zona",
           "type": "teaser",
-          "layout": "4,0,4,6",
+          "layout": "4.5,1,3,4",
           "title": "ZONA",
           "alignment": "center",
           "image": "https://ceperaca.github.io/msx/images/zona.jpg",
@@ -31,7 +31,7 @@
         {
           "id": "lift",
           "type": "teaser",
-          "layout": "8,0,4,6",
+          "layout": "8.5,1,3,4",
           "title": "LIFT",
           "alignment": "center",
           "image": "https://ceperaca.github.io/msx/images/lift.jpg",
