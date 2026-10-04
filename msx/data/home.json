@@ -1,6 +1,7 @@
 {
   "name": "HomeTheater",
   "version": "1.0",
+  "title": "Домашний кинотеатр",
   "type": "pages",
   "pages": [
     {
