@@ -25,7 +25,7 @@
           "type": "teaser",
           "layout": "4.4,0,2,2",
           "image": "https://ceperaca.github.io/msx/images/lift.jpg",
-          "action": "menu:request:interaction:menu@https://lift3.ws"
+          "action": "menu:request:interaction:menu@https://lift3.ws/msx/"
         }
       ]
     }
