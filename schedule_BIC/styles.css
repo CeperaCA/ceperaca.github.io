@@ -69,6 +69,7 @@ main { padding: 8px; }
 .table-wrap {
   border: 1px solid var(--line);
   border-radius: 10px;
+  overflow: hidden;
 }
 
 table {
@@ -121,6 +122,14 @@ td:nth-child(2) {
   border-right: 1px solid var(--line);
 }
 
+/* Первые две колонки выделены серой заливкой. */
+th:nth-child(1),
+td:nth-child(1),
+th:nth-child(2),
+td:nth-child(2) {
+  background: #e5e7eb !important;
+}
+
 tbody tr:last-child td {
   border-bottom: none;
 }
@@ -136,5 +145,5 @@ tbody tr:last-child td {
 }
 
 .date-cell .day-week {
-  font-weight: 600;
+  font-weight: 400;
 }
