@@ -1,0 +1,33 @@
+{
+  "name": "HomeTheater",
+  "version": "1.0",
+  "headline": "Домашний кинотеатр",
+  "type": "pages",
+  "pages": [
+    {
+      "items": [
+        {
+          "id": "lampa",
+          "type": "teaser",
+          "layout": "0,0,2,2",
+          "image": "https://ceperaca.github.io/msx/images/lampa.jpg",
+          "action": "link:http://bylampa.online"
+        },
+        {
+          "id": "zona",
+          "type": "teaser",
+          "layout": "2.2,0,2,2",
+          "image": "https://ceperaca.github.io/msx/images/zona.jpg",
+          "action": "link:https://msx.zona.ms"
+        },
+        {
+          "id": "lift",
+          "type": "teaser",
+          "layout": "4.4,0,2,2",
+          "image": "https://ceperaca.github.io/msx/images/lift.jpg",
+          "action": "menu:request:interaction:menu@https://lift3.ws/msx/"
+        }
+      ]
+    }
+  ]
+}
