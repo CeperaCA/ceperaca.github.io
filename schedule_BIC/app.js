@@ -96,16 +96,9 @@ function showTable() {
 }
 
 function renderTable({ headers, rows }) {
+  // Заголовок таблицы (A, B, C и т. д.) не показываем.
   theadEl.innerHTML = "";
   tbodyEl.innerHTML = "";
-
-  const trh = document.createElement("tr");
-  headers.forEach(h => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trh.appendChild(th);
-  });
-  theadEl.appendChild(trh);
 
   if (rows.length === 0) {
     const tr = document.createElement("tr");

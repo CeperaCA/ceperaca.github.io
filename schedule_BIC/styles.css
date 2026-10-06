@@ -2,11 +2,10 @@
   --bg: #ffffff;
   --fg: #1a1a1a;
   --muted: #6b7280;
-  --line: #e5e7eb;
+  --line: #9ca3af;
   --line-strong: #9ca3af;
   --accent: #2aabee;
   --chip: #f3f4f6;
-  --col-gray: #f3f4f6;
 }
 
 * { box-sizing: border-box; }
@@ -87,52 +86,32 @@ th, td {
   word-break: break-word;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+  background: #ffffff !important;
+  color: #000000 !important;
   font-size: 13px;
 }
 
-th:last-child,
 td:last-child {
   border-right: none;
 }
 
-thead th {
-  position: sticky;
-  top: 0;
-  background: #f9fafb;
-  font-weight: 600;
-  z-index: 1;
-  border-bottom: 1px solid var(--line-strong);
+/* Заголовок таблицы скрыт: строки A/B/C больше не отображаются. */
+thead {
+  display: none;
 }
 
-tbody tr:nth-child(6n) td {
-  border-bottom: 1px solid var(--line-strong);
+/* Первые две колонки максимально узкие. */
+th:nth-child(1),
+td:nth-child(1) {
+  width: 1%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 1%;
+  border-right: 1px solid var(--line);
 }
 
 tbody tr:last-child td {
   border-bottom: none;
-}
-
-th:nth-child(1),
-td:nth-child(1) {
-  width: 20%;
-}
-
-th:nth-child(2),
-td:nth-child(2) {
-  width: 12%;
-}
-
-th:nth-child(-n+2),
-td:nth-child(-n+2) {
-  background: var(--col-gray);
-  text-align: center;
-}
-
-th:nth-child(2),
-td:nth-child(2) {
-  border-right: 2px solid var(--line-strong);
-}
-
-thead th:nth-child(-n+2) {
-  background: #e5e7eb;
 }
