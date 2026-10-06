@@ -116,7 +116,21 @@ function renderTable({ headers, rows }) {
     const tr = document.createElement("tr");
     for (let i = 0; i < headers.length; i++) {
       const td = document.createElement("td");
-      td.textContent = r[i] ?? "";
+      const value = r[i] ?? "";
+
+      // В первой колонке показываем день недели и дату двумя строками: "ВТ" / "06.10".
+      if (i === 0 && value) {
+        const normalized = String(value).replace(/\s*\n\s*/g, " ").trim();
+        const match = normalized.match(/^([А-ЯЁA-Z]{2,3})\s+(\d{1,2}\.\d{1,2}(?:\.\d{2,4})?)$/i);
+        if (match) {
+          td.innerHTML = `<span class="day-week">${match[1]}</span><span class="day-date">${match[2]}</span>`;
+        } else {
+          td.textContent = value;
+        }
+        td.classList.add("date-cell");
+      } else {
+        td.textContent = value;
+      }
       tr.appendChild(td);
     }
     tbodyEl.appendChild(tr);
