@@ -96,12 +96,10 @@ td:last-child {
   border-right: none;
 }
 
-/* Заголовок таблицы скрыт: строки A/B/C больше не отображаются. */
 thead {
   display: none;
 }
 
-/* Первые две колонки максимально узкие. */
 th:nth-child(1),
 td:nth-child(1) {
   width: 42px;
@@ -122,7 +120,6 @@ td:nth-child(2) {
   border-right: 1px solid var(--line);
 }
 
-/* Первые две колонки выделены серой заливкой. */
 th:nth-child(1),
 td:nth-child(1),
 th:nth-child(2),
@@ -148,8 +145,6 @@ tbody tr:last-child td {
   font-weight: 400;
 }
 
-
-/* Номер пары: по центру, жирный текст */
 th:nth-child(2),
 td:nth-child(2) {
   text-align: center;
@@ -157,7 +152,6 @@ td:nth-child(2) {
   border-right: 3px solid #000;
 }
 
-/* Первые две колонки: жирный текст */
 th:nth-child(1),
 td:nth-child(1),
 th:nth-child(2),
@@ -165,13 +159,10 @@ td:nth-child(2) {
   font-weight: 700;
 }
 
-/* Разделение дней: после 2-й, 8-й, 14-й,
-   20-й и каждой следующей строки через 6 строк */
-tbody tr:nth-child(6n + 2) td {
+tbody tr:nth-child(6n) td {
   border-bottom: 3px solid #000;
 }
 
-/* Дата и день недели тоже выделены жирным */
 .date-cell .day-week,
 .date-cell .day-date {
   font-weight: 700;
