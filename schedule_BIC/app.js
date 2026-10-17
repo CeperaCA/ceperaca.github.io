@@ -180,8 +180,6 @@ const isSaturday = normalizedDay === "СБ";
   bellsTitle.textContent = "Звонки";
   bellsSubtitle.textContent = isSaturday ? "Суббота" : "Будни";
   bellsList.replaceChildren();
-
-  schedule.slice(0, 6).forEach((pair, index) => {
   
 schedule.slice(0, 6).forEach((pair, index) => {
   const item = document.createElement("div");
@@ -242,9 +240,7 @@ document.addEventListener("keydown", event => {
   }
 });
 
-// Обработчик общий: работает и после переключения вкладок.
-tbodyEl.addEventListener("click", event => {
-
+// Обработчик общий: работает и после переключения вкладок
 tbodyEl.addEventListener("click", event => {
   const row = event.target.closest("tr");
   if (!row || !tbodyEl.contains(row)) return;
