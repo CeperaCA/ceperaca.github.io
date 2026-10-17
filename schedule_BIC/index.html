@@ -21,6 +21,32 @@
     </div>
   </main>
 
+<div id="bells-modal" class="bells-modal" aria-hidden="true">
+  <div class="bells-backdrop" data-close-bells></div>
+
+  <section
+    class="bells-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="bells-title"
+  >
+    <button
+      class="bells-close"
+      type="button"
+      data-close-bells
+      aria-label="Закрыть"
+    >×</button>
+
+    <h2 id="bells-title">Расписание звонков</h2>
+    <p id="bells-subtitle" class="bells-subtitle"></p>
+    <div id="bells-list" class="bells-list"></div>
+
+    <button class="bells-button" type="button" data-close-bells>
+      Закрыть
+    </button>
+  </section>
+</div>
+
   <script src="app.js"></script>
 </body>
 </html>
