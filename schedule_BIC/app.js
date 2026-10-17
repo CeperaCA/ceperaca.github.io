@@ -165,13 +165,7 @@ const bellsList = document.getElementById("bells-list");
 
 function openBellsModal(dayText, pairNumber) {
   
-const normalizedDay = String(dayText ?? "")
-  .replace(/\u00A0/g, " ")
-  .replace(/\s+/g, " ")
-  .trim()
-  .toLocaleUpperCase("ru-RU");
-
-const isSaturday = normalizedDay === "СБ";
+const isSaturday = /СБ/i.test(dayText.replace(/\s+/g, " ").trim());
 
   const schedule = isSaturday
     ? BELL_SCHEDULE.saturday
