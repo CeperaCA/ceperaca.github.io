@@ -1,4 +1,27 @@
 let CONFIG = null;
+const BELL_SCHEDULE = {
+  weekdays: [
+    { start: "08:30", end: "10:00" },
+    { start: "10:10", end: "11:40" },
+    { start: "12:10", end: "13:40" },
+    { start: "13:50", end: "15:20" },
+    { start: "15:30", end: "17:00" },
+    { start: "17:10", end: "18:40" },
+    { start: "18:50", end: "20:20" },
+    { start: "20:30", end: "22:00" }
+  ],
+
+  saturday: [
+    { start: "08:30", end: "09:50" },
+    { start: "10:00", end: "11:20" },
+    { start: "11:30", end: "12:50" },
+    { start: "13:00", end: "14:20" },
+    { start: "14:30", end: "15:50" },
+    { start: "16:00", end: "17:20" },
+    { start: "17:30", end: "18:50" },
+    { start: "19:00", end: "20:20" }
+  ]
+};
 
 const tabsEl  = document.getElementById("tabs");
 const stateEl = document.getElementById("state");
@@ -136,6 +159,119 @@ function renderTable({ headers, rows }) {
     tbodyEl.appendChild(tr);
   });
 }
+
+const bellsModal = document.getElementById("bells-modal");
+const bellsTitle = document.getElementById("bells-title");
+const bellsSubtitle = document.getElementById("bells-subtitle");
+const bellsList = document.getElementById("bells-list");
+
+function openBellsModal(dayText, pairNumber) {
+  const isSaturday = /^СБ\b/i.test(dayText.trim());
+  const schedule = isSaturday
+    ? BELL_SCHEDULE.saturday
+    : BELL_SCHEDULE.weekdays;
+
+  bellsTitle.textContent = "Расписание звонков";
+  bellsSubtitle.textContent = isSaturday
+    ? "Суббота"
+    : "Понедельник — пятница";
+
+  bellsList.replaceChildren();
+
+  schedule.forEach((pair, index) => {
+    const number = index + 1;
+    const item = document.createElement("div");
+    item.className = "bells-item";
+
+    if (number === pairNumber) {
+      item.classList.add("active");
+    }
+
+    const numberEl = document.createElement("span");
+    numberEl.className = "bells-number";
+    numberEl.textContent = `${number}-я пара`;
+
+    const timeEl = document.createElement("div");
+    timeEl.className = "bells-time";
+
+    const timeRange = document.createElement("div");
+    timeRange.textContent = `${pair.start} — ${pair.end}`;
+    timeEl.appendChild(timeRange);
+
+    if (index < schedule.length - 1) {
+      const nextStart = schedule[index + 1].start;
+      const breakEl = document.createElement("div");
+      breakEl.className = "bells-break";
+      breakEl.textContent =
+        `Перерыв: ${getBreakMinutes(pair.end, nextStart)} мин.`;
+      timeEl.appendChild(breakEl);
+    }
+
+    item.append(numberEl, timeEl);
+    bellsList.appendChild(item);
+  });
+
+  bellsModal.classList.add("is-open");
+  bellsModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+
+  const activeItem = bellsList.querySelector(".active");
+  if (activeItem) {
+    activeItem.scrollIntoView({ block: "nearest" });
+  }
+}
+
+function getBreakMinutes(end, start) {
+  const toMinutes = time => {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours * 60 + minutes;
+  };
+
+  return toMinutes(start) - toMinutes(end);
+}
+
+function closeBellsModal() {
+  bellsModal.classList.remove("is-open");
+  bellsModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+bellsModal.querySelectorAll("[data-close-bells]").forEach(el => {
+  el.addEventListener("click", closeBellsModal);
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" &&
+      bellsModal.classList.contains("is-open")) {
+    closeBellsModal();
+  }
+});
+
+// Обработчик общий: работает и после переключения вкладок.
+tbodyEl.addEventListener("click", event => {
+  const row = event.target.closest("tr");
+  if (!row || !tbodyEl.contains(row)) return;
+
+  const cells = row.querySelectorAll("td");
+  if (cells.length < 2) return;
+
+  const dayText = cells[0].innerText.replace(/\s+/g, " ").trim();
+  const pairText = cells[1].innerText.trim();
+  const match = pairText.match(/\d+/);
+
+  if (!match) return;
+
+  const pairNumber = Number(match[0]);
+  if (pairNumber < 1 ||
+      pairNumber > Math.max(
+        BELL_SCHEDULE.weekdays.length,
+        BELL_SCHEDULE.saturday.length
+      )) {
+    return;
+  }
+
+  openBellsModal(dayText, pairNumber);
+});
 
 async function loadSheet() {
   const sheet = CONFIG.sheets[currentSheetIndex];
