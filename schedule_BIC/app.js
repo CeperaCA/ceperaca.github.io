@@ -2,21 +2,21 @@ let CONFIG = null;
 
 const BELL_SCHEDULE = {
   weekdays: [
-    { start: "08:30", end: "09:15", break: 5, secondEnd: "10:00" },
-    { start: "10:10", end: "10:55", break: 5, secondEnd: "11:40" },
-    { start: "12:10", end: "12:55", break: 5, secondEnd: "13:40" },
-    { start: "13:50", end: "14:35", break: 5, secondEnd: "15:20" },
-    { start: "15:30", end: "16:15", break: 5, secondEnd: "17:00" },
-    { start: "17:10", end: "17:55", break: 5, secondEnd: "18:40" }
+    { firstStart: "08:30", firstEnd: "09:15", secondStart: "09:20", secondEnd: "10:00" },
+    { firstStart: "10:10", firstEnd: "10:55", secondStart: "11:00", secondEnd: "11:40" },
+    { firstStart: "12:10", firstEnd: "12:55", secondStart: "13:00", secondEnd: "13:40" },
+    { firstStart: "13:50", firstEnd: "14:35", secondStart: "14:40", secondEnd: "15:20" },
+    { firstStart: "15:30", firstEnd: "16:15", secondStart: "16:20", secondEnd: "17:00" },
+    { firstStart: "17:10", firstEnd: "17:55", secondStart: "18:00", secondEnd: "18:40" }
   ],
 
   saturday: [
-    { start: "08:30", end: "09:10", break: 5, secondEnd: "09:50" },
-    { start: "10:00", end: "10:40", break: 5, secondEnd: "11:20" },
-    { start: "11:30", end: "12:10", break: 5, secondEnd: "12:50" },
-    { start: "13:00", end: "13:40", break: 5, secondEnd: "14:20" },
-    { start: "14:30", end: "15:10", break: 5, secondEnd: "15:50" },
-    { start: "16:00", end: "16:40", break: 5, secondEnd: "17:20" }
+    { firstStart: "08:30", firstEnd: "09:10", secondStart: "09:15", secondEnd: "09:50" },
+    { firstStart: "10:00", firstEnd: "10:40", secondStart: "10:45", secondEnd: "11:20" },
+    { firstStart: "11:30", firstEnd: "12:10", secondStart: "12:15", secondEnd: "12:50" },
+    { firstStart: "13:00", firstEnd: "13:40", secondStart: "13:45", secondEnd: "14:20" },
+    { firstStart: "14:30", firstEnd: "15:10", secondStart: "15:15", secondEnd: "15:50" },
+    { firstStart: "16:00", firstEnd: "16:40", secondStart: "16:45", secondEnd: "17:20" }
   ]
 };
 
@@ -164,9 +164,14 @@ const bellsList = document.getElementById("bells-list");
 
 
 function openBellsModal(dayText, pairNumber) {
-  const isSaturday = /СБ/i.test(
-    dayText.replace(/\s+/g, " ").trim()
-  );
+  
+const normalizedDay = String(dayText ?? "")
+  .replace(/\u00A0/g, " ")
+  .replace(/\s+/g, " ")
+  .trim()
+  .toLocaleUpperCase("ru-RU");
+
+const isSaturday = normalizedDay === "СБ";
 
   const schedule = isSaturday
     ? BELL_SCHEDULE.saturday
@@ -177,47 +182,34 @@ function openBellsModal(dayText, pairNumber) {
   bellsList.replaceChildren();
 
   schedule.slice(0, 6).forEach((pair, index) => {
-    const item = document.createElement("div");
-    item.className = "bells-item";
+  
+schedule.slice(0, 6).forEach((pair, index) => {
+  const item = document.createElement("div");
+  item.className = "bells-item";
 
-    if (index + 1 === pairNumber) {
-      item.classList.add("active");
-    }
+  if (index + 1 === pairNumber) {
+    item.classList.add("active");
+  }
 
-    const first = document.createElement("div");
-    first.className = "bells-number";
-    first.textContent = `${index + 1}-я пара`;
+  const number = document.createElement("span");
+  number.className = "bells-number";
+  number.textContent = `${index + 1}-я пара`;
 
-    const times = document.createElement("div");
-    times.className = "bells-times";
+  const times = document.createElement("div");
+  times.className = "bells-times";
 
-    const firstHalf = document.createElement("div");
-    firstHalf.className = "bells-half";
-    firstHalf.innerHTML =
-      `<span>1-я полупара</span><b>${pair.start}–${pair.end}</b>`;
+  const first = document.createElement("div");
+  first.className = "bells-half";
+  first.textContent = `${pair.firstStart}–${pair.firstEnd}`;
 
-    const breakRow = document.createElement("div");
-    breakRow.className = "bells-mini-break";
-    breakRow.textContent = `Перерыв ${pair.break} мин.`;
+  const second = document.createElement("div");
+  second.className = "bells-half";
+  second.textContent = `${pair.secondStart}–${pair.secondEnd}`;
 
-    const secondHalf = document.createElement("div");
-    secondHalf.className = "bells-half";
-
-    const nextStart = pair.end.split(":").map(Number);
-    const secondStartMinutes =
-      nextStart[0] * 60 + nextStart[1] + pair.break;
-    const secondStart = [
-      String(Math.floor(secondStartMinutes / 60)).padStart(2, "0"),
-      String(secondStartMinutes % 60).padStart(2, "0")
-    ].join(":");
-
-    secondHalf.innerHTML =
-      `<span>2-я полупара</span><b>${secondStart}–${pair.secondEnd}</b>`;
-
-    times.append(firstHalf, breakRow, secondHalf);
-    item.append(first, times);
-    bellsList.appendChild(item);
-  });
+  times.append(first, second);
+  item.append(number, times);
+  bellsList.appendChild(item);
+});
 
   bellsModal.classList.add("is-open");
   bellsModal.setAttribute("aria-hidden", "false");
@@ -252,28 +244,21 @@ document.addEventListener("keydown", event => {
 
 // Обработчик общий: работает и после переключения вкладок.
 tbodyEl.addEventListener("click", event => {
+
+tbodyEl.addEventListener("click", event => {
   const row = event.target.closest("tr");
   if (!row || !tbodyEl.contains(row)) return;
 
   const cells = row.querySelectorAll("td");
   if (cells.length < 2) return;
 
-  const dayText = cells[0].innerText.replace(/\s+/g, " ").trim();
-  const pairText = cells[1].innerText.trim();
+  const dayText = cells[0].textContent.trim();
+  const pairText = cells[1].textContent.trim();
   const match = pairText.match(/\d+/);
 
   if (!match) return;
 
-  const pairNumber = Number(match[0]);
-  if (pairNumber < 1 ||
-      pairNumber > Math.max(
-        BELL_SCHEDULE.weekdays.length,
-        BELL_SCHEDULE.saturday.length
-      )) {
-    return;
-  }
-
-  openBellsModal(dayText, pairNumber);
+  openBellsModal(dayText, Number(match[0]));
 });
 
 async function loadSheet() {
