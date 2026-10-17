@@ -1,25 +1,22 @@
 let CONFIG = null;
+
 const BELL_SCHEDULE = {
   weekdays: [
-    { start: "08:30", end: "10:00" },
-    { start: "10:10", end: "11:40" },
-    { start: "12:10", end: "13:40" },
-    { start: "13:50", end: "15:20" },
-    { start: "15:30", end: "17:00" },
-    { start: "17:10", end: "18:40" },
-    { start: "18:50", end: "20:20" },
-    { start: "20:30", end: "22:00" }
+    { start: "08:30", end: "09:15", break: 5, secondEnd: "10:00" },
+    { start: "10:10", end: "10:55", break: 5, secondEnd: "11:40" },
+    { start: "12:10", end: "12:55", break: 5, secondEnd: "13:40" },
+    { start: "13:50", end: "14:35", break: 5, secondEnd: "15:20" },
+    { start: "15:30", end: "16:15", break: 5, secondEnd: "17:00" },
+    { start: "17:10", end: "17:55", break: 5, secondEnd: "18:40" }
   ],
 
   saturday: [
-    { start: "08:30", end: "09:50" },
-    { start: "10:00", end: "11:20" },
-    { start: "11:30", end: "12:50" },
-    { start: "13:00", end: "14:20" },
-    { start: "14:30", end: "15:50" },
-    { start: "16:00", end: "17:20" },
-    { start: "17:30", end: "18:50" },
-    { start: "19:00", end: "20:20" }
+    { start: "08:30", end: "09:10", break: 5, secondEnd: "09:50" },
+    { start: "10:00", end: "10:40", break: 5, secondEnd: "11:20" },
+    { start: "11:30", end: "12:10", break: 5, secondEnd: "12:50" },
+    { start: "13:00", end: "13:40", break: 5, secondEnd: "14:20" },
+    { start: "14:30", end: "15:10", break: 5, secondEnd: "15:50" },
+    { start: "16:00", end: "16:40", break: 5, secondEnd: "17:20" }
   ]
 };
 
@@ -165,61 +162,66 @@ const bellsTitle = document.getElementById("bells-title");
 const bellsSubtitle = document.getElementById("bells-subtitle");
 const bellsList = document.getElementById("bells-list");
 
+
 function openBellsModal(dayText, pairNumber) {
-  
-const isSaturday = /СБ/i.test(dayText.replace(/\s+/g, " ").trim());
+  const isSaturday = /СБ/i.test(
+    dayText.replace(/\s+/g, " ").trim()
+  );
+
   const schedule = isSaturday
     ? BELL_SCHEDULE.saturday
     : BELL_SCHEDULE.weekdays;
 
-  bellsTitle.textContent = "Расписание звонков";
-  bellsSubtitle.textContent = isSaturday
-    ? "Суббота"
-    : "Понедельник — пятница";
-
+  bellsTitle.textContent = "Звонки";
+  bellsSubtitle.textContent = isSaturday ? "Суббота" : "Будни";
   bellsList.replaceChildren();
 
-  schedule.forEach((pair, index) => {
-    const number = index + 1;
+  schedule.slice(0, 6).forEach((pair, index) => {
     const item = document.createElement("div");
     item.className = "bells-item";
 
-    if (number === pairNumber) {
+    if (index + 1 === pairNumber) {
       item.classList.add("active");
     }
 
-    const numberEl = document.createElement("span");
-    numberEl.className = "bells-number";
-    numberEl.textContent = `${number}-я пара`;
+    const first = document.createElement("div");
+    first.className = "bells-number";
+    first.textContent = `${index + 1}-я пара`;
 
-    const timeEl = document.createElement("div");
-    timeEl.className = "bells-time";
+    const times = document.createElement("div");
+    times.className = "bells-times";
 
-    const timeRange = document.createElement("div");
-    timeRange.textContent = `${pair.start} — ${pair.end}`;
-    timeEl.appendChild(timeRange);
+    const firstHalf = document.createElement("div");
+    firstHalf.className = "bells-half";
+    firstHalf.innerHTML =
+      `<span>1-я полупара</span><b>${pair.start}–${pair.end}</b>`;
 
-    if (index < schedule.length - 1) {
-      const nextStart = schedule[index + 1].start;
-      const breakEl = document.createElement("div");
-      breakEl.className = "bells-break";
-      breakEl.textContent =
-        `Перерыв: ${getBreakMinutes(pair.end, nextStart)} мин.`;
-      timeEl.appendChild(breakEl);
-    }
+    const breakRow = document.createElement("div");
+    breakRow.className = "bells-mini-break";
+    breakRow.textContent = `Перерыв ${pair.break} мин.`;
 
-    item.append(numberEl, timeEl);
+    const secondHalf = document.createElement("div");
+    secondHalf.className = "bells-half";
+
+    const nextStart = pair.end.split(":").map(Number);
+    const secondStartMinutes =
+      nextStart[0] * 60 + nextStart[1] + pair.break;
+    const secondStart = [
+      String(Math.floor(secondStartMinutes / 60)).padStart(2, "0"),
+      String(secondStartMinutes % 60).padStart(2, "0")
+    ].join(":");
+
+    secondHalf.innerHTML =
+      `<span>2-я полупара</span><b>${secondStart}–${pair.secondEnd}</b>`;
+
+    times.append(firstHalf, breakRow, secondHalf);
+    item.append(first, times);
     bellsList.appendChild(item);
   });
 
   bellsModal.classList.add("is-open");
   bellsModal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
-
-  const activeItem = bellsList.querySelector(".active");
-  if (activeItem) {
-    activeItem.scrollIntoView({ block: "nearest" });
-  }
 }
 
 function getBreakMinutes(end, start) {
