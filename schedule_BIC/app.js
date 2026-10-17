@@ -166,7 +166,8 @@ const bellsSubtitle = document.getElementById("bells-subtitle");
 const bellsList = document.getElementById("bells-list");
 
 function openBellsModal(dayText, pairNumber) {
-  const isSaturday = /^СБ\b/i.test(dayText.trim());
+  
+const isSaturday = /СБ/i.test(dayText.replace(/\s+/g, " ").trim());
   const schedule = isSaturday
     ? BELL_SCHEDULE.saturday
     : BELL_SCHEDULE.weekdays;
