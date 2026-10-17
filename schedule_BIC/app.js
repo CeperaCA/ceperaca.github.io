@@ -2,21 +2,21 @@ let CONFIG = null;
 
 const BELL_SCHEDULE = {
   weekdays: [
-    { firstStart: "08:30", firstEnd: "09:15", secondStart: "09:20", secondEnd: "10:00" },
-    { firstStart: "10:10", firstEnd: "10:55", secondStart: "11:00", secondEnd: "11:40" },
-    { firstStart: "12:10", firstEnd: "12:55", secondStart: "13:00", secondEnd: "13:40" },
-    { firstStart: "13:50", firstEnd: "14:35", secondStart: "14:40", secondEnd: "15:20" },
-    { firstStart: "15:30", firstEnd: "16:15", secondStart: "16:20", secondEnd: "17:00" },
-    { firstStart: "17:10", firstEnd: "17:55", secondStart: "18:00", secondEnd: "18:40" }
+    { firstStart: "08:00", firstEnd: "08:45", secondStart: "08:50", secondEnd: "09:35" },
+    { firstStart: "09:45", firstEnd: "10:30", secondStart: "10:35", secondEnd: "11:20" },
+    { firstStart: "12:20", firstEnd: "13:05", secondStart: "13:10", secondEnd: "13:55" },
+    { firstStart: "14:05", firstEnd: "14:50", secondStart: "14:55", secondEnd: "15:40" },
+    { firstStart: "15:50", firstEnd: "16:35", secondStart: "16:40", secondEnd: "17:25" },
+    { firstStart: "17:35", firstEnd: "18:20", secondStart: "18:25", secondEnd: "19:10" }
   ],
 
   saturday: [
-    { firstStart: "08:30", firstEnd: "09:10", secondStart: "09:15", secondEnd: "09:50" },
-    { firstStart: "10:00", firstEnd: "10:40", secondStart: "10:45", secondEnd: "11:20" },
-    { firstStart: "11:30", firstEnd: "12:10", secondStart: "12:15", secondEnd: "12:50" },
-    { firstStart: "13:00", firstEnd: "13:40", secondStart: "13:45", secondEnd: "14:20" },
-    { firstStart: "14:30", firstEnd: "15:10", secondStart: "15:15", secondEnd: "15:50" },
-    { firstStart: "16:00", firstEnd: "16:40", secondStart: "16:45", secondEnd: "17:20" }
+    { firstStart: "08:00", firstEnd: "08:45", secondStart: "08:50", secondEnd: "09:35" },
+    { firstStart: "09:45", firstEnd: "10:30", secondStart: "10:35", secondEnd: "11:20" },
+    { firstStart: "11:30", firstEnd: "12:15", secondStart: "12:20", secondEnd: "13:05" },
+    { firstStart: "13:15", firstEnd: "14:00", secondStart: "14:05", secondEnd: "14:50" },
+    { firstStart: "15:00", firstEnd: "15:45", secondStart: "15:55", secondEnd: "16:40" },
+    { firstStart: "16:50", firstEnd: "17:35", secondStart: "17:40", secondEnd: "18:25" }
   ]
 };
 
