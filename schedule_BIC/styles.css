@@ -306,3 +306,82 @@ tbody tr:nth-child(6n) td {
     }
   }
 }
+
+.bells-dialog {
+  width: min(100%, 360px);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  padding: 18px 12px 12px;
+  border-radius: 16px;
+}
+
+.bells-dialog h2 {
+  font-size: 19px;
+  margin-bottom: 4px;
+}
+
+.bells-subtitle {
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.bells-list {
+  gap: 5px;
+}
+
+.bells-item {
+  padding: 7px 8px;
+  gap: 8px;
+  border-radius: 9px;
+}
+
+.bells-number {
+  font-size: 12px;
+  min-width: 52px;
+}
+
+.bells-times {
+  flex: 1;
+  min-width: 0;
+}
+
+.bells-half {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.bells-half span {
+  color: #6b7280;
+}
+
+.bells-half b {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.bells-mini-break {
+  padding: 2px 0;
+  color: #6b7280;
+  font-size: 10px;
+  text-align: center;
+}
+
+.bells-button {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+@media (max-height: 650px) {
+  .bells-dialog {
+    padding-top: 12px;
+  }
+
+  .bells-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
