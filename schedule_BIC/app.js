@@ -242,13 +242,39 @@ tbodyEl.addEventListener("click", event => {
   const cells = row.querySelectorAll("td");
   if (cells.length < 2) return;
 
-  const dayText = cells[0].textContent.trim();
+  // Ищем обозначение дня в текущей или предыдущих строках.
+  let currentRow = row;
+  let dayText = "";
+
+  while (currentRow && tbodyEl.contains(currentRow)) {
+    const currentCells = currentRow.querySelectorAll("td");
+
+    if (currentCells.length >= 2) {
+      const candidate = currentCells[0].textContent
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (candidate) {
+        dayText = candidate;
+        break;
+      }
+    }
+
+    currentRow = currentRow.previousElementSibling;
+  }
+
+  const isSaturday = /СБ/i.test(dayText);
+
   const pairText = cells[1].textContent.trim();
   const match = pairText.match(/\d+/);
 
   if (!match) return;
 
-  openBellsModal(dayText, Number(match[0]));
+  const pairNumber = Number(match[0]);
+  if (pairNumber < 1 || pairNumber > 6) return;
+
+  // Передаём день в том же формате, который ожидает функция.
+  openBellsModal(isSaturday ? "СБ" : dayText, pairNumber);
 });
 
 async function loadSheet() {
