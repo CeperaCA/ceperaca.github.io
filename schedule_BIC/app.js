@@ -155,6 +155,8 @@ function renderTable({ headers, rows }) {
     }
     tbodyEl.appendChild(tr);
   });
+
+  mergeDayCells();
 }
 
 const bellsModal = document.getElementById("bells-modal");
@@ -172,7 +174,7 @@ const isSaturday = /СБ/i.test(dayText.replace(/\s+/g, " ").trim());
     : BELL_SCHEDULE.weekdays;
 
   bellsTitle.textContent = "Звонки";
-  bellsSubtitle.textContent = isSaturday ? "Суббота" : "Будни";
+  bellsSubtitle.textContent = "";
   bellsList.replaceChildren();
   
 schedule.slice(0, 6).forEach((pair, index) => {
@@ -299,6 +301,23 @@ async function loadSheet() {
       "и что в config.json верно указаны ID таблицы и gid листов.",
       true
     );
+  }
+}
+
+function mergeDayCells() {
+  const rows = tbodyEl.querySelectorAll("tr");
+
+  for (let i = 0; i < rows.length; i += 6) {
+    const firstCell = rows[i].cells[0];
+
+    if (!firstCell) continue;
+
+    firstCell.rowSpan = Math.min(6, rows.length - i);
+
+    for (let j = 1; j < 6 && i + j < rows.length; j++) {
+      const cell = rows[i + j].cells[0];
+      if (cell) cell.style.display = "none";
+    }
   }
 }
 
