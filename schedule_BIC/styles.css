@@ -450,6 +450,7 @@ tbody tr:nth-child(6n) td {
 #table tbody tr:focus-within td:first-child {
   background-color: inherit !important;
   box-shadow: none !important;
+  background: #e5e7eb !important;
 }
 
 /* Если подсветка задаётся классом на самой ячейке */
@@ -457,6 +458,7 @@ tbody tr:nth-child(6n) td {
 #table tbody td:first-child.active {
   background-color: inherit !important;
   box-shadow: none !important;
+  background: #e5e7eb !important;
 }
 
 /* У последней объединённой ячейки нет нижней линии */
