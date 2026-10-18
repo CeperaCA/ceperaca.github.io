@@ -420,3 +420,24 @@ tbody tr:nth-child(6n) td {
   border-bottom-width: 1px !important;
   border-bottom-style: solid !important;
 }
+
+#bells-modal button {
+  /* Не добавляй это правило: оно скроет все кнопки модального окна */
+}
+
+#table tbody td[rowspan="6"] {
+  border-bottom: 3px solid #222 !important;
+  box-shadow: none !important;
+}
+
+#table tbody tr:last-child td {
+  border-bottom: 1px solid #ccc !important;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+#table tbody tr:last-child::after,
+#table tbody tr:last-child td::after {
+  content: none !important;
+  display: none !important;
+}
