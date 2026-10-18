@@ -426,7 +426,7 @@ tbody tr:nth-child(6n) td {
 }
 
 #table tbody td[rowspan="6"] {
-  border-bottom: 3px solid #222 !important;
+  border-bottom: 2px solid #222 !important;
   box-shadow: none !important;
 }
 
