@@ -469,3 +469,18 @@ tbody tr:nth-child(6n) td {
   background-color: inherit !important;
   box-shadow: none !important;
 }
+
+/* У последней объединённой ячейки нет нижней линии */
+#table tbody td.last-merged-cell {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+/* Убираем подсветку первой колонки при наведении и выборе строки */
+#table tbody tr:hover td:first-child,
+#table tbody tr.selected td:first-child,
+#table tbody tr.active td:first-child,
+#table tbody tr:focus-within td:first-child {
+  box-shadow: none !important;
+}
