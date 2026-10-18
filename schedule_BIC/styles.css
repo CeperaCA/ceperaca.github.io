@@ -441,3 +441,10 @@ tbody tr:nth-child(6n) td {
   content: none !important;
   display: none !important;
 }
+
+#bells-modal button,
+#bells-modal .btn-close,
+#bells-modal .close,
+#bells-modal [aria-label="Закрыть"] {
+  display: none !important;
+}
