@@ -241,6 +241,14 @@ tbodyEl.addEventListener("click", event => {
   const row = event.target.closest("tr");
   if (!row || !tbodyEl.contains(row)) return;
 
+  const firstCell = row.cells[0];
+
+// Клик по первой колонке открывает расписание без выбранной пары
+if (firstCell && firstCell.contains(event.target)) {
+  openBellSchedule(dayText, null);
+  return;
+}
+
   const cells = row.querySelectorAll("td");
   if (cells.length < 2) return;
 
