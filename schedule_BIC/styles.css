@@ -421,10 +421,6 @@ tbody tr:nth-child(6n) td {
   border-bottom-style: solid !important;
 }
 
-#bells-modal button {
-  /* Не добавляй это правило: оно скроет все кнопки модального окна */
-}
-
 #table tbody td[rowspan="6"] {
   border-bottom: 2px solid #222 !important;
   box-shadow: none !important;
@@ -439,13 +435,6 @@ tbody tr:nth-child(6n) td {
 #table tbody tr:last-child::after,
 #table tbody tr:last-child td::after {
   content: none !important;
-  display: none !important;
-}
-
-#bells-modal button,
-#bells-modal .btn-close,
-#bells-modal .close,
-#bells-modal [aria-label="Закрыть"] {
   display: none !important;
 }
 
@@ -488,10 +477,4 @@ tbody tr:nth-child(6n) td {
 /* Скрываем только кнопку с текстом «Закрыть» */
 #bells-modal button:not(.bells-close):not(.close-button) {
   /* Не скрываем кнопки автоматически */
-}
-
-/* Крестик остаётся видимым и доступным */
-#bells-modal .bells-close,
-#bells-modal .close-button {
-  display: inline-flex !important;
 }
