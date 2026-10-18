@@ -307,16 +307,30 @@ async function loadSheet() {
 function mergeDayCells() {
   const rows = tbodyEl.querySelectorAll("tr");
 
+  // Убираем старые отметки перед повторным объединением
+  rows.forEach(row => {
+    const cell = row.cells[0];
+    if (cell) {
+      cell.classList.remove("last-merged-cell");
+    }
+  });
+
   for (let i = 0; i < rows.length; i += 6) {
     const firstCell = rows[i].cells[0];
-
     if (!firstCell) continue;
 
-    firstCell.rowSpan = Math.min(6, rows.length - i);
+    const count = Math.min(6, rows.length - i);
+    firstCell.rowSpan = count;
 
-    for (let j = 1; j < 6 && i + j < rows.length; j++) {
+    // Скрываем первые ячейки в следующих пяти строках
+    for (let j = 1; j < count; j++) {
       const cell = rows[i + j].cells[0];
       if (cell) cell.style.display = "none";
+    }
+
+    // Запоминаем последнюю объединённую ячейку
+    if (i + count >= rows.length) {
+      firstCell.classList.add("last-merged-cell");
     }
   }
 }
