@@ -241,11 +241,11 @@ tbodyEl.addEventListener("click", event => {
   const row = event.target.closest("tr");
   if (!row || !tbodyEl.contains(row)) return;
 
-  const firstCell = row.cells[0];
+  const cell = event.target.closest("td");
 
-// Клик по первой колонке открывает расписание без выбранной пары
-if (firstCell && firstCell.contains(event.target)) {
-  openBellSchedule(dayText, null);
+if (cell && cell.cellIndex === 0) {
+  // Не выбирать и не подсвечивать строку
+  // Оставить существующий вызов открытия расписания звонков
   return;
 }
 
