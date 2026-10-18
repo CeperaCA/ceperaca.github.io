@@ -415,3 +415,8 @@ tbody tr:nth-child(6n) td {
     font-size: 12px;
   }
 }
+
+#table tbody tr:last-child td {
+  border-bottom-width: 1px !important;
+  border-bottom-style: solid !important;
+}
