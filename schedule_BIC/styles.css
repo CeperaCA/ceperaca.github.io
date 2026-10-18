@@ -475,3 +475,14 @@ tbody tr:nth-child(6n) td {
 #table tbody tr:focus-within td:first-child {
   box-shadow: none !important;
 }
+
+/* Не подсвечивать первую строку при клике по первой колонке */
+#table tbody tr:has(td:first-child:active) {
+  background-color: inherit !important;
+}
+
+/* Если подсветка задана отдельным классом */
+#table tbody tr.selected:has(td:first-child),
+#table tbody tr.active:has(td:first-child) {
+  background-color: inherit !important;
+}
