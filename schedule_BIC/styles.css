@@ -486,3 +486,32 @@ tbody tr:nth-child(6n) td {
 #table tbody tr.active:has(td:first-child) {
   background-color: inherit !important;
 }
+
+/* Таблица расписания всегда остаётся светлой */
+#table,
+#table thead,
+#table tbody,
+#table tr,
+#table th,
+#table td {
+  background-color: #fff !important;
+  color: #212121 !important;
+  color-scheme: light;
+}
+
+/* Сохраняем границы ячеек */
+#table th,
+#table td {
+  border-color: #ccc;
+}
+
+/* Заголовки таблицы тоже остаются белыми */
+#table thead th {
+  background-color: #fff !important;
+  color: #212121 !important;
+}
+
+#table {
+  color-scheme: light !important;
+  background: #fff !important;
+}
