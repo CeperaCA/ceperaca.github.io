@@ -164,7 +164,6 @@ const bellsTitle = document.getElementById("bells-title");
 const bellsSubtitle = document.getElementById("bells-subtitle");
 const bellsList = document.getElementById("bells-list");
 
-
 function openBellsModal(dayText, pairNumber) {
   
 const isSaturday = /СБ/i.test(dayText.replace(/\s+/g, " ").trim());
@@ -239,52 +238,55 @@ document.addEventListener("keydown", event => {
 // Обработчик общий: работает и после переключения вкладок
 tbodyEl.addEventListener("click", event => {
   const row = event.target.closest("tr");
-  if (!row || !tbodyEl.contains(row)) return;
+if (!row || !tbodyEl.contains(row)) return;
 
-  const cell = event.target.closest("td");
+const cells = row.querySelectorAll("td");
+if (cells.length < 2) return;
 
-if (cell && cell.cellIndex === 0) {
-  // Не выбирать и не подсвечивать строку
-  // Оставить существующий вызов открытия расписания звонков
+// Определяем, по какой ячейке кликнули
+const clickedCell = event.target.closest("td");
+if (!clickedCell) return;
+
+// Ищем обозначение дня в текущей или предыдущих строках.
+let currentRow = row;
+let dayText = "";
+
+while (currentRow && tbodyEl.contains(currentRow)) {
+  const currentCells = currentRow.querySelectorAll("td");
+
+  if (currentCells.length >= 2) {
+    const candidate = currentCells[0].textContent
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (candidate) {
+      dayText = candidate;
+      break;
+    }
+  }
+
+  currentRow = currentRow.previousElementSibling;
+}
+
+const isSaturday = /СБ/i.test(dayText);
+const modalDay = isSaturday ? "СБ" : dayText;
+
+// Клик по первой колонке: открыть расписание без выбранной пары
+if (clickedCell.cellIndex === 0) {
+  openBellsModal(modalDay, null);
   return;
 }
 
-  const cells = row.querySelectorAll("td");
-  if (cells.length < 2) return;
+// Для остальных колонок сохраняем выбор пары
+const pairText = cells[1].textContent.trim();
+const match = pairText.match(/\d+/);
 
-  // Ищем обозначение дня в текущей или предыдущих строках.
-  let currentRow = row;
-  let dayText = "";
+if (!match) return;
 
-  while (currentRow && tbodyEl.contains(currentRow)) {
-    const currentCells = currentRow.querySelectorAll("td");
+const pairNumber = Number(match[0]);
+if (pairNumber < 1 || pairNumber > 6) return;
 
-    if (currentCells.length >= 2) {
-      const candidate = currentCells[0].textContent
-        .replace(/\s+/g, " ")
-        .trim();
-
-      if (candidate) {
-        dayText = candidate;
-        break;
-      }
-    }
-
-    currentRow = currentRow.previousElementSibling;
-  }
-
-  const isSaturday = /СБ/i.test(dayText);
-
-  const pairText = cells[1].textContent.trim();
-  const match = pairText.match(/\d+/);
-
-  if (!match) return;
-
-  const pairNumber = Number(match[0]);
-  if (pairNumber < 1 || pairNumber > 6) return;
-
-  // Передаём день в том же формате, который ожидает функция.
-  openBellsModal(isSaturday ? "СБ" : dayText, pairNumber);
+openBellsModal(modalDay, pairNumber);
 });
 
 async function loadSheet() {
