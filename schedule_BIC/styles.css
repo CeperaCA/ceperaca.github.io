@@ -487,7 +487,14 @@ tbody tr:nth-child(6n) td {
   background-color: inherit !important;
 }
 
-#table tbody tr:has(td:first-child:active) td {
+/* Не подсвечивать первую пару при нажатии на объединённую ячейку */
+#table tbody tr:has(td:first-child:active) td:nth-child(2) {
+  background-color: #e5e7eb !important;
+  box-shadow: none !important;
+}
+
+/* Не подсвечивать первую пару при нажатии на объединённую ячейку */
+#table tbody tr:has(td:first-child:active) td:nth-child(3) {
   background-color: inherit !important;
   box-shadow: none !important;
 }
