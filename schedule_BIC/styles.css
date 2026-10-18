@@ -484,3 +484,14 @@ tbody tr:nth-child(6n) td {
 #table tbody tr:focus-within td:first-child {
   box-shadow: none !important;
 }
+
+/* Скрываем только кнопку с текстом «Закрыть» */
+#bells-modal button:not(.bells-close):not(.close-button) {
+  /* Не скрываем кнопки автоматически */
+}
+
+/* Крестик остаётся видимым и доступным */
+#bells-modal .bells-close,
+#bells-modal .close-button {
+  display: inline-flex !important;
+}
