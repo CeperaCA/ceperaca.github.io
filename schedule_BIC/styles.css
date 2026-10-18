@@ -486,3 +486,8 @@ tbody tr:nth-child(6n) td {
 #table tbody tr.active:has(td:first-child) {
   background-color: inherit !important;
 }
+
+#table tbody tr:has(td:first-child:active) td {
+  background-color: inherit !important;
+  box-shadow: none !important;
+}
