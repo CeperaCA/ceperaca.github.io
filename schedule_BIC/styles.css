@@ -448,3 +448,24 @@ tbody tr:nth-child(6n) td {
 #bells-modal [aria-label="Закрыть"] {
   display: none !important;
 }
+
+/* Убираем нижнюю линию у последней объединённой ячейки */
+#table tbody tr td[rowspan="6"]:last-child {
+  border-bottom: none !important;
+}
+
+/* Первая колонка: без подсветки при выборе строки */
+#table tbody tr.selected td:first-child,
+#table tbody tr.active td:first-child,
+#table tbody tr:hover td:first-child,
+#table tbody tr:focus-within td:first-child {
+  background-color: inherit !important;
+  box-shadow: none !important;
+}
+
+/* Если подсветка задаётся классом на самой ячейке */
+#table tbody td:first-child.selected,
+#table tbody td:first-child.active {
+  background-color: inherit !important;
+  box-shadow: none !important;
+}
