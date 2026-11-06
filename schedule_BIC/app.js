@@ -1,5 +1,25 @@
 let CONFIG = null;
 
+const BELL_SCHEDULE = {
+  weekdays: [
+    { firstStart: "08:00", firstEnd: "08:45", secondStart: "08:50", secondEnd: "09:35" },
+    { firstStart: "09:45", firstEnd: "10:30", secondStart: "10:35", secondEnd: "11:20" },
+    { firstStart: "12:20", firstEnd: "13:05", secondStart: "13:10", secondEnd: "13:55" },
+    { firstStart: "14:05", firstEnd: "14:50", secondStart: "14:55", secondEnd: "15:40" },
+    { firstStart: "15:50", firstEnd: "16:35", secondStart: "16:40", secondEnd: "17:25" },
+    { firstStart: "17:35", firstEnd: "18:20", secondStart: "18:25", secondEnd: "19:10" }
+  ],
+
+  saturday: [
+    { firstStart: "08:00", firstEnd: "08:45", secondStart: "08:50", secondEnd: "09:35" },
+    { firstStart: "09:45", firstEnd: "10:30", secondStart: "10:35", secondEnd: "11:20" },
+    { firstStart: "11:30", firstEnd: "12:15", secondStart: "12:20", secondEnd: "13:05" },
+    { firstStart: "13:15", firstEnd: "14:00", secondStart: "14:05", secondEnd: "14:50" },
+    { firstStart: "15:00", firstEnd: "15:45", secondStart: "15:55", secondEnd: "16:40" },
+    { firstStart: "16:50", firstEnd: "17:35", secondStart: "17:40", secondEnd: "18:25" }
+  ]
+};
+
 const tabsEl  = document.getElementById("tabs");
 const stateEl = document.getElementById("state");
 const wrapEl  = document.getElementById("table-wrap");
@@ -135,7 +155,139 @@ function renderTable({ headers, rows }) {
     }
     tbodyEl.appendChild(tr);
   });
+
+  mergeDayCells();
 }
+
+const bellsModal = document.getElementById("bells-modal");
+const bellsTitle = document.getElementById("bells-title");
+const bellsSubtitle = document.getElementById("bells-subtitle");
+const bellsList = document.getElementById("bells-list");
+
+function openBellsModal(dayText, pairNumber) {
+  
+const isSaturday = /СБ/i.test(dayText.replace(/\s+/g, " ").trim());
+
+  const schedule = isSaturday
+    ? BELL_SCHEDULE.saturday
+    : BELL_SCHEDULE.weekdays;
+
+  bellsTitle.textContent = "Звонки";
+  bellsSubtitle.textContent = "";
+  bellsList.replaceChildren();
+  
+schedule.slice(0, 6).forEach((pair, index) => {
+  const item = document.createElement("div");
+  item.className = "bells-item";
+
+  if (index + 1 === pairNumber) {
+    item.classList.add("active");
+  }
+
+  const number = document.createElement("span");
+  number.className = "bells-number";
+  number.textContent = `${index + 1}-я пара`;
+
+  const times = document.createElement("div");
+  times.className = "bells-times";
+
+  const first = document.createElement("div");
+  first.className = "bells-half";
+  first.textContent = `${pair.firstStart}–${pair.firstEnd}`;
+
+  const second = document.createElement("div");
+  second.className = "bells-half";
+  second.textContent = `${pair.secondStart}–${pair.secondEnd}`;
+
+  times.append(first, second);
+  item.append(number, times);
+  bellsList.appendChild(item);
+});
+
+  bellsModal.classList.add("is-open");
+  bellsModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function getBreakMinutes(end, start) {
+  const toMinutes = time => {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours * 60 + minutes;
+  };
+
+  return toMinutes(start) - toMinutes(end);
+}
+
+function closeBellsModal() {
+  bellsModal.classList.remove("is-open");
+  bellsModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+bellsModal.querySelectorAll("[data-close-bells]").forEach(el => {
+  el.addEventListener("click", closeBellsModal);
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" &&
+      bellsModal.classList.contains("is-open")) {
+    closeBellsModal();
+  }
+});
+
+// Обработчик общий: работает и после переключения вкладок
+tbodyEl.addEventListener("click", event => {
+  const row = event.target.closest("tr");
+if (!row || !tbodyEl.contains(row)) return;
+
+const cells = row.querySelectorAll("td");
+if (cells.length < 2) return;
+
+// Определяем, по какой ячейке кликнули
+const clickedCell = event.target.closest("td");
+if (!clickedCell) return;
+
+// Ищем обозначение дня в текущей или предыдущих строках.
+let currentRow = row;
+let dayText = "";
+
+while (currentRow && tbodyEl.contains(currentRow)) {
+  const currentCells = currentRow.querySelectorAll("td");
+
+  if (currentCells.length >= 2) {
+    const candidate = currentCells[0].textContent
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (candidate) {
+      dayText = candidate;
+      break;
+    }
+  }
+
+  currentRow = currentRow.previousElementSibling;
+}
+
+const isSaturday = /СБ/i.test(dayText);
+const modalDay = isSaturday ? "СБ" : dayText;
+
+// Клик по первой колонке: открыть расписание без выбранной пары
+if (clickedCell.cellIndex === 0) {
+  openBellsModal(modalDay, null);
+  return;
+}
+
+// Для остальных колонок сохраняем выбор пары
+const pairText = cells[1].textContent.trim();
+const match = pairText.match(/\d+/);
+
+if (!match) return;
+
+const pairNumber = Number(match[0]);
+if (pairNumber < 1 || pairNumber > 6) return;
+
+openBellsModal(modalDay, pairNumber);
+});
 
 async function loadSheet() {
   const sheet = CONFIG.sheets[currentSheetIndex];
@@ -159,6 +311,37 @@ async function loadSheet() {
       "и что в config.json верно указаны ID таблицы и gid листов.",
       true
     );
+  }
+}
+
+function mergeDayCells() {
+  const rows = tbodyEl.querySelectorAll("tr");
+
+  // Убираем старые отметки перед повторным объединением
+  rows.forEach(row => {
+    const cell = row.cells[0];
+    if (cell) {
+      cell.classList.remove("last-merged-cell");
+    }
+  });
+
+  for (let i = 0; i < rows.length; i += 6) {
+    const firstCell = rows[i].cells[0];
+    if (!firstCell) continue;
+
+    const count = Math.min(6, rows.length - i);
+    firstCell.rowSpan = count;
+
+    // Скрываем первые ячейки в следующих пяти строках
+    for (let j = 1; j < count; j++) {
+      const cell = rows[i + j].cells[0];
+      if (cell) cell.style.display = "none";
+    }
+
+    // Запоминаем последнюю объединённую ячейку
+    if (i + count >= rows.length) {
+      firstCell.classList.add("last-merged-cell");
+    }
   }
 }
 

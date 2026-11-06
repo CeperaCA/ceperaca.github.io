@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Расписание</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 </head>
 <body>
   <header>
@@ -20,6 +21,20 @@
       </table>
     </div>
   </main>
+
+
+  <div id="bells-modal" class="bells-modal" aria-hidden="true">
+    <div class="bells-backdrop" data-close-bells></div>
+
+    <section class="bells-dialog" role="dialog"
+      aria-modal="true" aria-labelledby="bells-title">
+      <button class="bells-close" type="button"
+        data-close-bells aria-label="Закрыть">×</button>
+      <h2 id="bells-title">Расписание звонков</h2>
+      <p id="bells-subtitle" class="bells-subtitle"></p>
+      <div id="bells-list" class="bells-list"></div>
+    </section>
+  </div>
 
   <script src="app.js"></script>
 </body>
