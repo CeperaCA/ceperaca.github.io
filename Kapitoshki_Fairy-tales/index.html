@@ -23,12 +23,14 @@ body{background:#171522;color:#fff;font-family:system-ui,-apple-system,"Segoe UI
 .controls{flex:none;width:100%;padding:7px 0 max(8px,env(safe-area-inset-bottom));
  display:flex;flex-direction:column;align-items:stretch;gap:8px;background:#171522}
  .audio-row{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:0 12px}
-#audioPlayer{display:block;flex:1;min-width:0;max-width:520px;height:38px;margin:0}
-#audioPlayer[hidden],#downloadAudio[hidden]{display:none}
-#downloadAudio{display:flex;align-items:center;justify-content:center;flex:none;width:42px;height:38px;
- border-radius:12px;background:#51446f;color:#fff;text-decoration:none;font-size:23px;font-weight:700;
- box-shadow:0 3px 0 #302843}
-#downloadAudio:active{transform:translateY(2px);box-shadow:0 1px 0 #302843}
+#audioPlayer{display:none}
+#audioPlayer[hidden],#downloadAudio[hidden],#playAudio[hidden],#audioProgress[hidden],#audioTime[hidden]{display:none}
+#playAudio,#downloadAudio{display:flex;align-items:center;justify-content:center;flex:none;width:44px;height:40px;
+ border:0;border-radius:13px;background:#51446f;color:#fff;text-decoration:none;font-size:21px;font-weight:700;
+ box-shadow:0 3px 0 #302843;cursor:pointer}
+#playAudio:active,#downloadAudio:active{transform:translateY(2px);box-shadow:0 1px 0 #302843}
+#audioProgress{flex:1;min-width:30px;max-width:420px;height:6px;accent-color:#a995d8;cursor:pointer}
+#audioTime{min-width:76px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums;color:#ddd}
 .navigation{display:flex;align-items:center;justify-content:space-between;width:100%;gap:12px;padding:0 10px}
 button{border:0;color:#fff;background:#51446f;border-radius:16px;width:64px;height:48px;
  font-size:29px;font-weight:600;cursor:pointer;box-shadow:0 3px 0 #302843;flex:none}
@@ -36,8 +38,8 @@ button:active{transform:translateY(2px);box-shadow:0 1px 0 #302843}
 button:disabled{opacity:.3;cursor:default}
 @media(orientation:landscape){
  .controls{padding-top:4px;gap:5px}
- #audioPlayer{height:32px}
- #downloadAudio{height:32px;width:38px}
+ #playAudio,#downloadAudio{height:36px;width:40px}
+ #audioTime{min-width:68px;font-size:11px}
  button{height:40px;width:58px}
 }
 </style>
@@ -45,13 +47,20 @@ button:disabled{opacity:.3;cursor:default}
 <body oncontextmenu="return false">
 <div id="loader" role="status" aria-live="polite">
   <div class="spinner"></div>
-  <div>Загружаем сказку…</div>
+  <div>Загрузка...</div>
 </div>
 <main class="stage"><img id="picture" alt="" draggable="false"></main>
 <footer class="controls">
   <div class="audio-row">
-    <audio id="audioPlayer" controls preload="none" hidden></audio>
-    <a id="downloadAudio" href="#" download hidden aria-label="Скачать аудиофайл" title="Скачать аудиофайл">↓</a>
+    <audio id="audioPlayer" preload="metadata"></audio>
+    <button id="playAudio" type="button" hidden aria-label="Воспроизвести" title="Воспроизвести">▶</button>
+    <input id="audioProgress" type="range" min="0" max="1000" value="0" hidden aria-label="Позиция воспроизведения">
+    <span id="audioTime" hidden>0:00 / 0:00</span>
+    <a id="downloadAudio" href="#" download hidden aria-label="Скачать аудиофайл" title="Скачать аудиофайл">
+      <svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/>
+      </svg>
+    </a>
   </div>
   <div class="navigation">
     <button id="previous" type="button" aria-label="Предыдущая картинка">‹</button>
@@ -74,6 +83,9 @@ button:disabled{opacity:.3;cursor:default}
   const loader = document.getElementById('loader');
   const player = document.getElementById('audioPlayer');
   const downloadAudio = document.getElementById('downloadAudio');
+  const playAudio = document.getElementById('playAudio');
+  const audioProgress = document.getElementById('audioProgress');
+  const audioTime = document.getElementById('audioTime');
   const previous = document.getElementById('previous');
   const next = document.getElementById('next');
   const pad = n => String(n).padStart(2, '0');
@@ -128,24 +140,64 @@ button:disabled{opacity:.3;cursor:default}
     player.pause();
     player.removeAttribute('src');
     player.load();
-    player.hidden = true;
+    playAudio.hidden = audioProgress.hidden = audioTime.hidden = true;
+    playAudio.textContent = '▶';
+    playAudio.setAttribute('aria-label', 'Воспроизвести');
+    audioProgress.value = 0;
+    audioTime.textContent = '0:00 / 0:00';
     downloadAudio.hidden = true;
     downloadAudio.removeAttribute('href');
 
     const audioPath = folder + pad(page.number) + '.mp3';
     player.onerror = () => {
-      player.pause(); player.removeAttribute('src'); player.load(); player.hidden = true;
+      player.pause(); player.removeAttribute('src'); player.load();
+      playAudio.hidden = audioProgress.hidden = audioTime.hidden = true;
       downloadAudio.hidden = true; downloadAudio.removeAttribute('href');
     };
     player.onloadedmetadata = () => {
-      player.hidden = false;
+      playAudio.hidden = audioProgress.hidden = audioTime.hidden = false;
       downloadAudio.href = audioPath;
       downloadAudio.download = pad(page.number) + '.mp3';
       downloadAudio.hidden = false;
+      updateAudioTime();
     };
     player.src = audioPath;
     player.load();
   }
+
+  function formatTime(seconds) {
+    if (!Number.isFinite(seconds)) return '0:00';
+    const value = Math.floor(seconds);
+    return Math.floor(value / 60) + ':' + String(value % 60).padStart(2, '0');
+  }
+
+  function updateAudioTime() {
+    audioTime.textContent = formatTime(player.currentTime) + ' / ' + formatTime(player.duration);
+    if (Number.isFinite(player.duration) && player.duration > 0) {
+      audioProgress.value = String(Math.round(player.currentTime / player.duration * 1000));
+    }
+  }
+
+  playAudio.addEventListener('click', () => {
+    if (player.paused) player.play().catch(() => {});
+    else player.pause();
+  });
+  player.addEventListener('play', () => {
+    playAudio.textContent = 'Ⅱ';
+    playAudio.setAttribute('aria-label', 'Пауза');
+  });
+  player.addEventListener('pause', () => {
+    playAudio.textContent = '▶';
+    playAudio.setAttribute('aria-label', 'Воспроизвести');
+  });
+  player.addEventListener('timeupdate', updateAudioTime);
+  player.addEventListener('loadedmetadata', updateAudioTime);
+  audioProgress.addEventListener('input', () => {
+    if (Number.isFinite(player.duration) && player.duration > 0) {
+      player.currentTime = Number(audioProgress.value) / 1000 * player.duration;
+      updateAudioTime();
+    }
+  });
 
   previous.addEventListener('click', () => showPage(current - 1));
   next.addEventListener('click', () => showPage(current + 1));
