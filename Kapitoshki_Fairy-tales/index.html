@@ -15,11 +15,28 @@ body{background:#171522;color:#fff;font-family:system-ui,-apple-system,"Segoe UI
 #picture{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
  pointer-events:none;user-select:none;-webkit-user-drag:none}
 #loader{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;
- justify-content:center;gap:18px;background:#171522;color:#fff;font-size:17px}
+ justify-content:center;gap:clamp(18px,3vh,30px);overflow:hidden;
+ padding:24px max(20px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));
+ background:radial-gradient(ellipse at 50% 42%,#6fcfff 0%,#369de0 34%,#2864b0 68%,#19264d 100%);
+ color:#fff;font-size:17px}
 #loader[hidden]{display:none}
-.spinner{width:46px;height:46px;border:4px solid #51446f;border-top-color:#fff;border-radius:50%;
- animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+#loader:before,#loader:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+#loader:before{width:min(90vw,720px);aspect-ratio:1;border:1px solid #ffffff35;box-shadow:0 0 0 28px #ffffff0b,0 0 70px #a5eaff45}
+#loader:after{content:"";position:absolute;width:min(120vw,900px);height:45vh;bottom:-27vh;background:radial-gradient(ellipse,#8de9ff55,transparent 68%)}
+.loader-spark{position:absolute;color:#fff3a0;text-shadow:0 0 14px #fff;animation:twinkle 2.2s ease-in-out infinite}
+.loader-spark.one{top:12%;left:13%;font-size:clamp(22px,5vw,42px)}
+.loader-spark.two{top:20%;right:14%;font-size:clamp(16px,4vw,32px);animation-delay:.7s}
+.loader-spark.three{bottom:19%;left:19%;font-size:clamp(14px,3vw,26px);animation-delay:1.2s}
+#loaderLogo{position:relative;z-index:1;display:block;width:min(88vw,760px);max-height:58vh;object-fit:contain;filter:drop-shadow(0 14px 22px #10234b70);animation:logo-arrive .8s cubic-bezier(.2,.8,.2,1) both}
+.loader-caption{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:13px;font-weight:700;letter-spacing:.04em;text-shadow:0 2px 8px #173a72}
+.loader-caption span{font-size:clamp(16px,3.8vw,21px)}
+.loader-track{width:min(190px,52vw);height:7px;border-radius:99px;background:#ffffff45;overflow:hidden;box-shadow:inset 0 1px 3px #183d7055}
+.loader-track:after{content:"";display:block;width:38%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#fff3a0,#fff);animation:loading 1.35s ease-in-out infinite}
+@keyframes loading{0%{transform:translateX(-110%)}100%{transform:translateX(280%)}}
+@keyframes twinkle{0%,100%{opacity:.45;transform:scale(.8)}50%{opacity:1;transform:scale(1.18)}}
+@keyframes logo-arrive{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(orientation:landscape){#loaderLogo{width:min(58vw,620px);max-height:68vh}.loader-caption{gap:9px}}
+@media(prefers-reduced-motion:reduce){#loaderLogo,.loader-spark,.loader-track:after{animation:none}}
 .controls{flex:none;width:100%;padding:7px 0 max(8px,env(safe-area-inset-bottom));
  display:flex;flex-direction:column;align-items:stretch;gap:8px;background:#171522}
 #audioPlayer{display:none}
@@ -49,8 +66,11 @@ button:disabled{opacity:.3;cursor:default}
 </head>
 <body oncontextmenu="return false">
 <div id="loader" role="status" aria-live="polite">
-  <div class="spinner"></div>
-  <div>Загрузка...</div>
+  <span class="loader-spark one" aria-hidden="true">✦</span>
+  <span class="loader-spark two" aria-hidden="true">✧</span>
+  <span class="loader-spark three" aria-hidden="true">✦</span>
+  <img id="loaderLogo" src="resources/logo.png" alt="Капитошки: В гостях у сказки">
+  <div class="loader-caption"><span>Загрузка...</span><div class="loader-track" aria-hidden="true"></div></div>
 </div>
 <main class="stage"><img id="picture" alt="" draggable="false"></main>
 <footer class="controls">
