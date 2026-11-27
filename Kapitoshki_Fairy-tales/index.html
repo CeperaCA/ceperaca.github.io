@@ -16,8 +16,13 @@ body{background:#171522;color:#fff;font-family:system-ui,-apple-system,"Segoe UI
  pointer-events:none;user-select:none;-webkit-user-drag:none}
 .controls{flex:none;width:100%;padding:7px 0 max(8px,env(safe-area-inset-bottom));
  display:flex;flex-direction:column;align-items:stretch;gap:8px;background:#171522}
-#audioPlayer{display:block;width:min(520px,calc(100% - 24px));height:38px;margin:0 auto}
-#audioPlayer[hidden]{display:none}
+ .audio-row{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:0 12px}
+#audioPlayer{display:block;flex:1;min-width:0;max-width:520px;height:38px;margin:0}
+#audioPlayer[hidden],#downloadAudio[hidden]{display:none}
+#downloadAudio{display:flex;align-items:center;justify-content:center;flex:none;width:42px;height:38px;
+ border-radius:12px;background:#51446f;color:#fff;text-decoration:none;font-size:23px;font-weight:700;
+ box-shadow:0 3px 0 #302843}
+#downloadAudio:active{transform:translateY(2px);box-shadow:0 1px 0 #302843}
 .navigation{display:flex;align-items:center;justify-content:space-between;width:100%;gap:12px;padding:0 10px}
 button{border:0;color:#fff;background:#51446f;border-radius:16px;width:64px;height:48px;
  font-size:29px;font-weight:600;cursor:pointer;box-shadow:0 3px 0 #302843;flex:none}
@@ -26,6 +31,7 @@ button:disabled{opacity:.3;cursor:default}
 @media(orientation:landscape){
  .controls{padding-top:4px;gap:5px}
  #audioPlayer{height:32px}
+ #downloadAudio{height:32px;width:38px}
  button{height:40px;width:58px}
 }
 </style>
@@ -33,7 +39,10 @@ button:disabled{opacity:.3;cursor:default}
 <body oncontextmenu="return false">
 <main class="stage"><img id="picture" alt="" draggable="false"></main>
 <footer class="controls">
-  <audio id="audioPlayer" controls preload="none" hidden></audio>
+  <div class="audio-row">
+    <audio id="audioPlayer" controls preload="none" hidden></audio>
+    <a id="downloadAudio" href="#" download hidden aria-label="Скачать аудиофайл" title="Скачать аудиофайл">↓</a>
+  </div>
   <div class="navigation">
     <button id="previous" type="button" aria-label="Предыдущая картинка">‹</button>
     <button id="next" type="button" aria-label="Следующая картинка">›</button>
@@ -53,6 +62,7 @@ button:disabled{opacity:.3;cursor:default}
 
   const picture = document.getElementById('picture');
   const player = document.getElementById('audioPlayer');
+  const downloadAudio = document.getElementById('downloadAudio');
   const previous = document.getElementById('previous');
   const next = document.getElementById('next');
   const pad = n => String(n).padStart(2, '0');
@@ -83,7 +93,7 @@ button:disabled{opacity:.3;cursor:default}
     }
     if (!pages.length) {
       picture.alt = 'В папке resources не найдены картинки';
-      previous.disabled = next.disabled = true;
+      previous.hidden = next.hidden = true;
       return;
     }
     showPage(0);
@@ -93,18 +103,29 @@ button:disabled{opacity:.3;cursor:default}
     current = Math.max(0, Math.min(pages.length - 1, index));
     const page = pages[current];
     picture.src = page.image;
-    previous.disabled = current === 0;
-    next.disabled = current === pages.length - 1;
+    // На первой и последней страницах ненужную кнопку полностью скрываем.
+    previous.hidden = current === 0;
+    next.hidden = current === pages.length - 1;
 
     // Сначала полностью сбрасываем предыдущую дорожку.
     player.pause();
     player.removeAttribute('src');
     player.load();
     player.hidden = true;
+    downloadAudio.hidden = true;
+    downloadAudio.removeAttribute('href');
 
     const audioPath = folder + pad(page.number) + '.mp3';
-    player.onerror = () => { player.pause(); player.removeAttribute('src'); player.load(); player.hidden = true; };
-    player.onloadedmetadata = () => { player.hidden = false; };
+    player.onerror = () => {
+      player.pause(); player.removeAttribute('src'); player.load(); player.hidden = true;
+      downloadAudio.hidden = true; downloadAudio.removeAttribute('href');
+    };
+    player.onloadedmetadata = () => {
+      player.hidden = false;
+      downloadAudio.href = audioPath;
+      downloadAudio.download = pad(page.number) + '.mp3';
+      downloadAudio.hidden = false;
+    };
     player.src = audioPath;
     player.load();
   }
