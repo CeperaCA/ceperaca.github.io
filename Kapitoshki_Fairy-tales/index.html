@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#171522">
-<title>Капитошки — В гостях у сказки</title>
+<title>Капитошки: В гостях у сказки</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;margin:0;overflow:hidden}
@@ -22,16 +22,17 @@ body{background:#171522;color:#fff;font-family:system-ui,-apple-system,"Segoe UI
 @keyframes spin{to{transform:rotate(360deg)}}
 .controls{flex:none;width:100%;padding:7px 0 max(8px,env(safe-area-inset-bottom));
  display:flex;flex-direction:column;align-items:stretch;gap:8px;background:#171522}
- .audio-row{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:0 12px}
 #audioPlayer{display:none}
 #audioPlayer[hidden],#downloadAudio[hidden],#playAudio[hidden],#audioProgress[hidden],#audioTime[hidden]{display:none}
+.audio-progress-row{display:flex;align-items:center;width:100%;padding:0 14px}
+#audioProgress{display:block;width:100%;height:6px;accent-color:#a995d8;cursor:pointer}
+.navigation{display:flex;align-items:center;justify-content:space-between;width:100%;gap:12px;padding:0 10px}
+.audio-controls{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;min-width:0}
 #playAudio,#downloadAudio{display:flex;align-items:center;justify-content:center;flex:none;width:44px;height:40px;
  border:0;border-radius:13px;background:#51446f;color:#fff;text-decoration:none;font-size:21px;font-weight:700;
  box-shadow:0 3px 0 #302843;cursor:pointer}
 #playAudio:active,#downloadAudio:active{transform:translateY(2px);box-shadow:0 1px 0 #302843}
-#audioProgress{flex:1;min-width:30px;max-width:420px;height:6px;accent-color:#a995d8;cursor:pointer}
 #audioTime{min-width:76px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums;color:#ddd}
-.navigation{display:flex;align-items:center;justify-content:space-between;width:100%;gap:12px;padding:0 10px}
 button{border:0;color:#fff;background:#51446f;border-radius:16px;width:64px;height:48px;
  font-size:29px;font-weight:600;cursor:pointer;box-shadow:0 3px 0 #302843;flex:none}
 button:active{transform:translateY(2px);box-shadow:0 1px 0 #302843}
@@ -40,6 +41,7 @@ button:disabled{opacity:.3;cursor:default}
  .controls{padding-top:4px;gap:5px}
  #playAudio,#downloadAudio{height:36px;width:40px}
  #audioTime{min-width:68px;font-size:11px}
+ .audio-controls{gap:6px}
  button{height:40px;width:58px}
 }
 </style>
@@ -51,19 +53,21 @@ button:disabled{opacity:.3;cursor:default}
 </div>
 <main class="stage"><img id="picture" alt="" draggable="false"></main>
 <footer class="controls">
-  <div class="audio-row">
-    <audio id="audioPlayer" preload="metadata"></audio>
-    <button id="playAudio" type="button" hidden aria-label="Воспроизвести" title="Воспроизвести">▶</button>
+  <div class="audio-progress-row">
     <input id="audioProgress" type="range" min="0" max="1000" value="0" hidden aria-label="Позиция воспроизведения">
-    <span id="audioTime" hidden>0:00 / 0:00</span>
-    <a id="downloadAudio" href="#" download hidden aria-label="Скачать аудиофайл" title="Скачать аудиофайл">
-      <svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/>
-      </svg>
-    </a>
   </div>
+  <audio id="audioPlayer" preload="metadata"></audio>
   <div class="navigation">
     <button id="previous" type="button" aria-label="Предыдущая картинка">‹</button>
+    <div class="audio-controls" id="audioControls" hidden>
+      <button id="playAudio" type="button" aria-label="Воспроизвести" title="Воспроизвести">▶</button>
+      <span id="audioTime">0:00 / 0:00</span>
+      <a id="downloadAudio" href="#" download aria-label="Скачать аудиофайл" title="Скачать аудиофайл">
+        <svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/>
+        </svg>
+      </a>
+    </div>
     <button id="next" type="button" aria-label="Следующая картинка">›</button>
   </div>
 </footer>
@@ -86,6 +90,7 @@ button:disabled{opacity:.3;cursor:default}
   const playAudio = document.getElementById('playAudio');
   const audioProgress = document.getElementById('audioProgress');
   const audioTime = document.getElementById('audioTime');
+  const audioControls = document.getElementById('audioControls');
   const previous = document.getElementById('previous');
   const next = document.getElementById('next');
   const pad = n => String(n).padStart(2, '0');
@@ -140,7 +145,7 @@ button:disabled{opacity:.3;cursor:default}
     player.pause();
     player.removeAttribute('src');
     player.load();
-    playAudio.hidden = audioProgress.hidden = audioTime.hidden = true;
+    audioControls.hidden = audioProgress.hidden = true;
     playAudio.textContent = '▶';
     playAudio.setAttribute('aria-label', 'Воспроизвести');
     audioProgress.value = 0;
@@ -151,11 +156,12 @@ button:disabled{opacity:.3;cursor:default}
     const audioPath = folder + pad(page.number) + '.mp3';
     player.onerror = () => {
       player.pause(); player.removeAttribute('src'); player.load();
-      playAudio.hidden = audioProgress.hidden = audioTime.hidden = true;
+      audioControls.hidden = audioProgress.hidden = true;
       downloadAudio.hidden = true; downloadAudio.removeAttribute('href');
+      audioControls.hidden = true; audioProgress.hidden = true;
     };
     player.onloadedmetadata = () => {
-      playAudio.hidden = audioProgress.hidden = audioTime.hidden = false;
+      audioControls.hidden = audioProgress.hidden = false;
       downloadAudio.href = audioPath;
       downloadAudio.download = pad(page.number) + '.mp3';
       downloadAudio.hidden = false;
