@@ -8,20 +8,22 @@
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;margin:0;overflow:hidden}
-body{background:#171522;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+body{width:100%;max-width:480px;height:100%;margin:0 auto;position:relative;background:#171522;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
  user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;display:flex;flex-direction:column;touch-action:pan-y}
 .stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;
  padding:max(8px,env(safe-area-inset-top)) 8px 6px}
-#picture{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+#pageCanvas{position:relative;display:grid;max-width:100%;max-height:100%;align-items:center;justify-items:center}
+#picture{grid-area:1/1;display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
  pointer-events:none;user-select:none;-webkit-user-drag:none}
-#loader{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:12px;overflow:hidden;padding:max(2vh,14px) max(20px,env(safe-area-inset-right)) max(3vh,18px) max(20px,env(safe-area-inset-left));background:#17254f url('assets/background.png') center center / cover no-repeat;color:#fff;font-size:17px}
+.page-overlay{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none;user-select:none;-webkit-user-drag:none}
+#loader{position:fixed;inset:0;left:50%;transform:translateX(-50%);width:min(100vw,480px);z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:12px;overflow:hidden;padding:max(2vh,14px) max(20px,env(safe-area-inset-right)) max(3vh,18px) max(20px,env(safe-area-inset-left));background:#17254f url('assets/background.png') center center / cover no-repeat;color:#fff;font-size:17px}
 #loader[hidden]{display:none}
 #loader:before,#loader:after{display:none}
 .loader-spark{position:absolute;color:#fff0a8;text-shadow:0 0 16px #fff,0 0 28px #ffe5a0;animation:twinkle 2.2s ease-in-out infinite;pointer-events:none}
 .loader-spark.one{top:12%;left:13%;font-size:clamp(22px,5vw,42px)}
 .loader-spark.two{top:20%;right:14%;font-size:clamp(16px,4vw,32px);animation-delay:.7s}
 .loader-spark.three{bottom:19%;left:19%;font-size:clamp(14px,3vw,26px);animation-delay:1.2s}
-#loaderLogo{position:relative;z-index:1;display:block;width:min(92vw,700px);max-height:72vh;object-fit:contain;filter:drop-shadow(0 14px 22px #10142b66);animation:logo-arrive .8s cubic-bezier(.2,.8,.2,1) both;flex:0 1 auto;margin:0 auto auto}
+#loaderLogo{position:relative;z-index:1;display:block;width:min(76%,340px);max-height:46vh;object-fit:contain;filter:drop-shadow(0 14px 22px #10142b66);animation:logo-arrive .8s cubic-bezier(.2,.8,.2,1) both;flex:0 1 auto;margin:0 auto auto}
 .loader-caption{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:15px;margin:0 auto 1vh;flex:none}
 .loader-caption span{font-size:clamp(27px,6vw,48px);font-weight:900;letter-spacing:.015em;color:#fff;text-align:center;-webkit-text-fill-color:#fff;-webkit-text-stroke:2px #0876d8;paint-order:stroke fill;text-shadow:0 3px 0 #0754ad,0 5px 0 #063b85,0 7px 12px #001c56,0 0 14px #83dfff}
 .loader-track{width:min(78vw,610px);height:clamp(28px,5.5vh,42px);padding:4px;border:4px solid #ffc84b;border-radius:999px;background:linear-gradient(180deg,#073b83,#061c55);overflow:hidden;box-shadow:0 3px 0 #a85b13,0 5px 15px #00183f99,inset 0 2px 5px #00143c}
@@ -66,7 +68,7 @@ button:disabled{opacity:.3;cursor:default}
   <img id="loaderLogo" src="assets/logo.png" alt="Капитошки: В гостях у сказки">
   <div class="loader-caption"><span>Загрузка...</span><div class="loader-track" aria-hidden="true"></div></div>
 </div>
-<main class="stage"><img id="picture" alt="" draggable="false"></main>
+<main class="stage"><div id="pageCanvas"><img id="picture" alt="" draggable="false"><img id="pictureUp" class="page-overlay" alt="" hidden draggable="false"><img id="pictureDown" class="page-overlay" alt="" hidden draggable="false"></div></main>
 <footer class="controls">
   <div class="audio-progress-row">
     <input id="audioProgress" type="range" min="0" max="1000" value="0" hidden aria-label="Позиция воспроизведения">
@@ -99,6 +101,8 @@ button:disabled{opacity:.3;cursor:default}
   let scanNumber = 1;
 
   const picture = document.getElementById('picture');
+  const pictureUp = document.getElementById('pictureUp');
+  const pictureDown = document.getElementById('pictureDown');
   const loader = document.getElementById('loader');
   const player = document.getElementById('audioPlayer');
   const downloadAudio = document.getElementById('downloadAudio');
@@ -155,9 +159,19 @@ button:disabled{opacity:.3;cursor:default}
     showPage(0);
   }
 
+  function setOptionalLayer(element, path) {
+    element.hidden = true;
+    element.removeAttribute('src');
+    element.onload = () => { element.hidden = false; };
+    element.onerror = () => { element.hidden = true; };
+    element.src = path;
+  }
+
   function showPage(index) {
     current = Math.max(0, Math.min(pages.length - 1, index));
     const page = pages[current];
+    setOptionalLayer(pictureUp, folder + pad(page.number) + '_up.png');
+    setOptionalLayer(pictureDown, folder + pad(page.number) + '_down.png');
     picture.onload = finishLoading;
     picture.onerror = finishLoading;
     picture.src = page.image;
