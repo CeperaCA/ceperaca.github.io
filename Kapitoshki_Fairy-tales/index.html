@@ -156,8 +156,9 @@ button:disabled{opacity:.3;cursor:default}
     for (const directory of ['03/', '04/', '05/', '06/']) {
       await scanGroup(directory, 1, true);
     }
-    // Заключительные страницы в корне (если добавлены).
-    await scanGroup('', 3, true);
+    // Продолжение общей нумерации в корне после тематических папок.
+    // Например, страница 07.png отображается после содержимого папки 06/.
+    await scanGroup('', 7, true);
 
     if (!pages.length) {
       picture.alt = 'В папке pages не найдены картинки';
