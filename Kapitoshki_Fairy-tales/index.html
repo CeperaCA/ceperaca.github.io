@@ -151,9 +151,13 @@ button:disabled{opacity:.3;cursor:default}
   }
 
   async function discoverPages() {
-    // Все изображения и аудио уже размещены в одной папке pages
-    // с общей сквозной нумерацией независимо от папок в исходном архиве.
+    // Вступительные страницы лежат в корне pages, остальные — в тематических папках.
     await scanGroup('', 1, true);
+    for (const directory of ['03/', '04/', '05/', '06/']) {
+      await scanGroup(directory, 1, true);
+    }
+    // Заключительные страницы в корне (если добавлены).
+    await scanGroup('', 3, true);
 
     if (!pages.length) {
       picture.alt = 'В папке pages не найдены картинки';
