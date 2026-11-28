@@ -93,14 +93,12 @@ button:disabled{opacity:.3;cursor:default}
 <script>
 (() => {
   'use strict';
-  // Файлы: pages/01.jpeg, pages/02.jpeg ...;
-  // аудио: pages/01.mp3, pages/02.mp3 ...
-  // Страницы автоматически находятся по последовательной нумерации.
-  const folder = 'pages/';
+  // Страницы хранятся в тематических папках, но показываются одной лентой:
+  // сначала pages/01..02, затем папки 03, 04, 05, 06,
+  // после них — страницы из корня начиная с 07.
   const extensions = ['jpeg', 'jpg', 'png'];
   const pages = [];
   let current = 0;
-  let scanNumber = 1;
 
   const picture = document.getElementById('picture');
   const pictureUp = document.getElementById('pictureUp');
@@ -117,23 +115,21 @@ button:disabled{opacity:.3;cursor:default}
   const pad = n => String(n).padStart(2, '0');
   const loaderStartedAt = Date.now();
   const minimumLoaderTime = 3000;
-  let pageLoaded = false;
   let loaderFinishScheduled = false;
 
   function finishLoading() {
-    pageLoaded = true;
     if (loaderFinishScheduled) return;
     loaderFinishScheduled = true;
     const remaining = Math.max(0, minimumLoaderTime - (Date.now() - loaderStartedAt));
     setTimeout(() => { loader.hidden = true; }, remaining);
   }
 
-  function findImage(number) {
+  function findImage(directory, number) {
     return new Promise(resolve => {
       let extIndex = 0;
       const tryNext = () => {
         if (extIndex >= extensions.length) { resolve(null); return; }
-        const path = folder + pad(number) + '.' + extensions[extIndex++];
+        const path = 'pages/' + directory + pad(number) + '.' + extensions[extIndex++];
         const probe = new Image();
         probe.onload = () => resolve(path);
         probe.onerror = tryNext;
@@ -143,19 +139,34 @@ button:disabled{opacity:.3;cursor:default}
     });
   }
 
-  async function discoverPages() {
-    // Идём по порядку и завершаем поиск на первом отсутствующем номере.
-    // Это позволяет просто добавлять новые файлы в pages.
-    while (scanNumber <= 999) {
-      const path = await findImage(scanNumber);
-      if (!path) break;
-      pages.push({ number: scanNumber, image: path });
-      scanNumber++;
+  async function scanGroup(directory, firstNumber, stopAtGap = true) {
+    for (let number = firstNumber; number <= 999; number++) {
+      const path = await findImage(directory, number);
+      if (!path) {
+        if (stopAtGap) break;
+        continue;
+      }
+      pages.push({ directory, number, image: path });
     }
+  }
+
+  async function discoverPages() {
+    // Корневые страницы 01 и 02 — вступление.
+    await scanGroup('', 1, true);
+
+    // Каждая папка — отдельный раздел исходного архива.
+    // Сами страницы разделов идут подряд, без показа названий папок.
+    for (const directory of ['03/', '04/', '05/', '06/']) {
+      await scanGroup(directory, 1, true);
+    }
+
+    // Продолжение общей нумерации в корне (07, 08 и далее).
+    await scanGroup('', 7, true);
+
     if (!pages.length) {
-      picture.alt = 'В папке resources не найдены картинки';
+      picture.alt = 'В папке pages не найдены картинки';
       previous.hidden = next.hidden = true;
-      loader.innerHTML = '<div>В папке resources не найдены картинки</div>';
+      loader.innerHTML = '<div>В папке pages не найдены картинки</div>';
       return;
     }
     showPage(0);
@@ -172,19 +183,18 @@ button:disabled{opacity:.3;cursor:default}
   function showPage(index) {
     current = Math.max(0, Math.min(pages.length - 1, index));
     const page = pages[current];
-    setOptionalLayer(pictureUp, folder + pad(page.number) + '_up.png');
-    setOptionalLayer(pictureDown, folder + pad(page.number) + '_down.png');
+    const stem = 'pages/' + page.directory + pad(page.number);
+    setOptionalLayer(pictureUp, stem + '_up.png');
+    setOptionalLayer(pictureDown, stem + '_down.png');
     picture.onload = finishLoading;
     picture.onerror = finishLoading;
     picture.src = page.image;
-    // На первой и последней страницах ненужную кнопку полностью скрываем.
+
     previous.hidden = current === 0;
     next.hidden = current === pages.length - 1;
-    // Если видна только одна кнопка, прижимаем её к соответствующему краю.
     next.style.marginLeft = current === 0 ? 'auto' : '';
     previous.style.marginRight = current === pages.length - 1 ? 'auto' : '';
 
-    // Сначала полностью сбрасываем предыдущую дорожку.
     player.pause();
     player.removeAttribute('src');
     player.load();
@@ -196,12 +206,11 @@ button:disabled{opacity:.3;cursor:default}
     downloadAudio.hidden = true;
     downloadAudio.removeAttribute('href');
 
-    const audioPath = folder + pad(page.number) + '.mp3';
+    const audioPath = stem + '.mp3';
     player.onerror = () => {
       player.pause(); player.removeAttribute('src'); player.load();
       audioControls.hidden = audioProgress.hidden = true;
       downloadAudio.hidden = true; downloadAudio.removeAttribute('href');
-      audioControls.hidden = true; audioProgress.hidden = true;
     };
     player.onloadedmetadata = () => {
       audioControls.hidden = audioProgress.hidden = false;
